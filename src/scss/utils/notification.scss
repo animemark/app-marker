@@ -1,0 +1,50 @@
+.notification {
+  position: fixed;
+  z-index: $zindex-tooltip;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  .alert {
+    width: 100%;
+    margin: 0;
+    border-radius: unset;
+  }
+
+  .progress {
+    position: absolute;
+    height: 5px;
+    background-color: transparent;
+    opacity: 50%;
+  }
+
+  &.t {
+    flex-direction: column-reverse;
+    left: 0;
+    right: 0;
+    top: 0;
+    .alert{
+      border-top: 0;
+    }
+    .progress {
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+  }
+  &.b {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .alert{
+      border-bottom: 0;
+    }
+    .progress {
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}

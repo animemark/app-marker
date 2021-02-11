@@ -1,0 +1,49 @@
+html,
+body {
+  min-height: 100%;
+  height: 100%;
+  background-color: transparent !important;
+}
+
+a {
+  text-decoration: none;
+  background-color: transparent;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+a.visited:visited {
+  color: #8d6e63 !important;
+}
+
+.wrapper {
+  position: relative;
+}
+
+// header & naver {
+header.header {
+  // padding-top: 1rem;
+  // padding-bottom: 1rem;
+}
+
+// } header & naver
+
+footer.footer {
+  //padding-bottom: 1rem;
+  color: #999;
+  a {
+    color: #777;
+  }
+  .small-text {
+    font-size: 0.8rem;
+  }
+}
+
+div.mainer {
+  display: block;
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+}

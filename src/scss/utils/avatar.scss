@@ -1,0 +1,39 @@
+// avatar-xs-005 avatar-sm-010
+//$my-avatar-bp: xs, sm, md, lg, xl;
+
+$my-avatar-sizes: (
+  0050: 00.50rem,
+  0075: 00.75rem,
+  0080: 00.80rem,
+  0100: 01.00rem,
+  0150: 01.50rem,
+  0200: 02.00rem,
+  0250: 02.50rem,
+  0300: 03.00rem,
+  0400: 04.00rem,
+  0500: 05.00rem,
+  0600: 06.00rem,
+  0700: 07.00rem,
+  0800: 08.00rem,
+  0900: 09.00rem,
+  1000: 10.00rem,
+  1100: 11.00rem,
+);
+
+@each $size, $value in $my-avatar-sizes {
+  .avatar-#{$size} {
+    width: #{$value};
+    height: #{$value};
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    @each $size, $value in $my-avatar-sizes {
+      .avatar-#{$breakpoint}-#{$size} {
+        width: #{$value};
+        height: #{$value};
+      }
+    }
+  }
+}

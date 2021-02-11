@@ -1,0 +1,8 @@
+// "container-lg" 和 "container-fluid container-max-width-lg" 的区别：
+// 第一个 在屏幕大于 lg 时，容器还会变大，继续适配 xl xxl 等
+// 第二个 在屏幕大于 lg 时，容器不再变大，一直保持 lg 的大小
+@each $breakpoint, $container-max-width in $container-max-widths {
+  .container-max-width-#{$breakpoint} {
+    max-width: $container-max-width;
+  }
+}

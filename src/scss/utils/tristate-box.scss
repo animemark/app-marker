@@ -1,0 +1,101 @@
+$tristate-box-base-j: #28a745 !default;
+$tristate-box-base-x: #dc3545 !default;
+$tristate-box-base-o: #ffffff !default;
+
+$tristate-box-stat-j: #ffffff !default;
+$tristate-box-stat-x: #ffffff !default;
+$tristate-box-stat-o: #e0e0e0 !default;
+
+$tristate-box-font-j: #28a745 !default;
+$tristate-box-font-x: #dc3545 !default;
+$tristate-box-font-o: $body-color !default;
+
+.tristate-box {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-style: normal;
+  font-weight: normal;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+
+  font {
+    padding-left: 1.5rem;
+    white-space: nowrap;
+  }
+
+  //&[state="O"] {
+  background-color: $tristate-box-base-o;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: $tristate-box-stat-o;
+  }
+  font {
+    color: $tristate-box-font-o;
+  }
+  //}
+
+  &[state="J"] {
+    background-color: $tristate-box-base-j;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 3px;
+      width: 11px;
+      height: 6.5px;
+      border: 3px solid $tristate-box-stat-j;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      transform: rotate(-45deg);
+    }
+    font {
+      color: $tristate-box-font-j;
+    }
+  }
+  &[state="X"] {
+    background-color: $tristate-box-base-x;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 3px;
+      width: 11px;
+      height: 3px;
+      background: $tristate-box-stat-x;
+      transform: rotate(45deg);
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 3px;
+      width: 11px;
+      height: 3px;
+      background: $tristate-box-stat-x;
+      transform: rotate(-45deg);
+    }
+    font {
+      color: $tristate-box-font-x;
+    }
+  }
+
+  &:hover::before,
+  &:hover::after {
+    opacity: 0.85;
+  }
+}

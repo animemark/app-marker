@@ -1,0 +1,30 @@
+$my-font-sizes: (
+  025: 0.25rem,
+  050: 0.50rem,
+  075: 0.75rem,
+  080: 0.80rem,
+  090: 0.90rem,
+  100: 1.00rem,
+  150: 1.50rem,
+  200: 2.00rem,
+  250: 2.50rem,
+  300: 3.00rem,
+  400: 4.00rem,
+  500: 5.00rem,
+);
+
+@each $size, $value in $my-font-sizes {
+  .font-size-#{$size} {
+    font-size: $value;
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    @each $size, $value in $my-font-sizes {
+      .font-size-#{$breakpoint}-#{$size} {
+        font-size: $value;
+      }
+    }
+  }
+}

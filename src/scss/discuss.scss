@@ -1,0 +1,103 @@
+.discuss-form {
+  div.info {
+    border: 2px solid #dbdfe4;
+    position: relative;
+    margin: 0;
+    padding: 1rem;
+    //font-size: 1.5rem;
+  }
+  div.alert.error {
+    position: relative;
+    margin-bottom: 0;
+    padding: 0.5rem 0.75rem;
+    &::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: -3px;
+      right: -2px;
+      border-top: 2px solid #dbdfe4;
+    }
+  }
+  div.editor {
+    background: #fff;
+    border: 2px solid #dbdfe4;
+    position: relative;
+    margin: 0;
+    -webkit-appearance: none;
+  }
+  div.EditArea {
+    color: #2a2e2e;
+    background-color: #fff;
+    outline: 0px solid transparent;
+
+    cursor: text;
+    resize: none;
+    border: 0;
+    padding: 0.5rem;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    min-height: 5.2rem;
+    line-height: 1.4rem;
+    overflow-y: scroll;
+    word-break: break-word;
+    transition: all 0.15s ease-in-out;
+
+    overflow: auto;
+    overflow-wrap: break-word;
+    max-height: 28rem;
+
+    -webkit-user-modify: read-write-plaintext-only;
+    -moz-user-modify: read-write-plaintext-only;
+    user-modify: read-write-plaintext-only;
+  }
+  div.toolBar {
+    position: relative;
+    height: 31px;
+    border-top: 2px solid #dbdfe4;
+    background-color: #f6f8f9;
+    .btn-group-wrapper {
+      width: 100%;
+      overflow-y: hidden;
+      overflow-x: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      padding-right: 100px;
+    }
+    button {
+      box-shadow: none;
+    }
+    button.submit {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: 0;
+      height: 33px;
+    }
+  }
+}
+
+.discuss-item {
+  img.avatar {
+    width: 40px;
+    height: 40px;
+  }
+  .discuss-subs {
+    padding-left: 40px;
+  }
+}
+
+.discuss-badges{
+  .btn{
+    padding: 1px 5px;
+    font-size: .75rem;
+  }
+}
+
+.discuss-indent {
+  padding-left: 40px;
+}

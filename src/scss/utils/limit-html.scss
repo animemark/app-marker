@@ -1,0 +1,104 @@
+.limit-html {
+  //overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: normal;
+  //word-wrap: break-word;
+  //word-break: break-all;
+
+  pre {
+    color: inherit;
+  }
+
+  pre,
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: initial;
+  }
+  ol,
+  ul,
+  dl {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+.limit-html-img{
+  max-width: 100%;
+}
+.limit-html-code {
+  // display: block;
+  // white-space: pre;
+  color: #e83e8c;
+}
+.limit-html-quote {
+  position: relative;
+  padding: 2rem;
+  margin: 0;
+  &::before {
+    content: "\201C"; //“ 275D
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+  &::after {
+    content: "\201E"; //„ 275E
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+}
+.limit-html-spoiler {
+  display: inline;
+  //background-color: $color-grey;
+  background-color: #687a86;
+  color: transparent;
+  padding: 0 0.5em;
+
+  // & > * {
+  //   color: transparent;
+  // }
+
+  a,
+  a:link,
+  a:hover,
+  a:active {
+    visibility: hidden;
+    transition: none;
+  }
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:focus-within {
+    //background-color: inherit;
+    //background-color: #e7e9ee;
+    color: inherit;
+    background-color: transparent;
+    outline-style: dashed;
+    outline-width: 0.5px;
+    outline-offset: 0px;
+    outline-color: pink;
+
+    a,
+    a:link,
+    a:hover,
+    a:active {
+      visibility: visible;
+      //color: blue;
+    }
+
+  }
+}

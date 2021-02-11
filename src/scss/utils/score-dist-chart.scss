@@ -1,0 +1,24 @@
+.score-dist-chart {
+  display: flex;
+  flex-direction: column-reverse;
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    .field {
+      width: 2rem;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .progress {
+      flex: 1;
+      height: .6rem;
+    }
+    .percent {
+      width: 4rem;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+// fixed colors {
+$theme-new-cnt: #37a51d !default;
+$theme-hot-cnt: #ff0084 !default;
+$theme-google: #da5040 !default;
+$theme-facebook: #445b95 !default;
+$theme-twitter: #20aaf5 !default;
+// }
+
+// Override bootstrap default variables {
+$primary: #167990;
+$body-bg: #ecf0f2;
+$info: #6f42c1;
+
+$body-color: #333;
+$link-color: darken($primary, 10%);
+$link-hover-color: darken($link-color, 10%);
+
+$enable-rounded: false;
+
+$grid-columns: 24;
+$grid-row-columns: 8;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  l2: 1440px,
+  l3: 1600px,
+  l4: 1920px,
+  l5: 2560px,
+  l6: 3200px,
+  l7: 3840px,
+  l8: 5120px,
+);
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  l2: 1380px,
+  l3: 1540px,
+  l4: 1860px,
+  l5: 2500px,
+  l6: 3140px,
+  l7: 3760px,
+  l8: 5020px,
+);
+// } Override bootstrap
+
+// Import Bootstrap and its default variables
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "./utils/index.scss";
+
+// 当前项目所用到的自定义
+@import "./common.scss";
+@import "./discuss.scss";

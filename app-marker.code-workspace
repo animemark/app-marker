@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "todohighlight.toggleURI": true,
+    // "liveSassCompile.settings.includeItems": [
+    //   "/src/scss/app-light.scss",
+    //   "/src/scss/app-dark.scss",
+    // ],
+    // "liveSassCompile.settings.formats": [
+    //   {
+    //     "format": "expanded",
+    //     "extensionName": ".css",
+    //     "savePath": "/public/css/"
+    //   },
+    //   {
+    //     "format": "compressed", // expanded, compact, compressed or nested
+    //     "extensionName": ".min.css",
+    //     "savePath": "/public/css/"
+    //   },
+    // ]
+  }
+}
