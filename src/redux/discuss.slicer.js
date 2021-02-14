@@ -11,7 +11,7 @@ export default createSlice({
     sortBy: false,
     badges: false, // badges info
     pageDoc: null,
-    pageKvs: {},
+    relaKvs: {},
     postKvs: {},// post key(postOid) => value(postDoc), storage all post doc
     postLis: {},// post list parentOid => [postOid list], storage info of all post list
     voteKvs: {},// current user vote record,
@@ -142,12 +142,12 @@ export default createSlice({
         state.postLis[listAt].loadStatus = 'failure';
         return;
       }
-      const { pageDoc, pageKvs, postLis, prevOid, prevPos, isLast, voteKvs } = res;
+      const { pageDoc, relaKvs, postLis, prevOid, prevPos, isLast, voteKvs } = res;
       if (pageDoc) {
         state.pageDoc = pageDoc;
       }
-      if (pageKvs) {
-        Object.assign(state.pageKvs, pageKvs);
+      if (relaKvs) {
+        Object.assign(state.relaKvs, relaKvs);
       }
       if (voteKvs) {
         Object.assign(state.voteKvs, voteKvs);

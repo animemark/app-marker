@@ -22,7 +22,7 @@ export default createSlice({
     markKvs: {},
     markLis: Confs.marking.default_markLis(),
     pageDoc: false,
-    pageKvs: {},
+    relaKvs: {},
     voteKvs: {},
   },
   reducers: {

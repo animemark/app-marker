@@ -18,7 +18,7 @@ function PostItem(props) {
   const postTo = postOid;
   const dispatch = useDispatch();
   const { userIid, userKvs } = useSelector(state => state.users);
-  const { badges, pageKvs, postKvs } = useSelector(state => state.discuss);
+  const { badges, relaKvs, postKvs } = useSelector(state => state.discuss);
 
   const formVal = useSelector(state => state.discuss.formKvs[postTo]);
   const isFormInited = formVal ? true : false;
@@ -76,23 +76,23 @@ function PostItem(props) {
     for (const pageKey of postDoc.pageKeys) {
       const badge = String(pageKey).substr(0, 4);
       if (myBadges[badge] !== null) continue;
-      if (!pageKvs[pageKey]) continue;
+      if (!relaKvs[pageKey]) continue;
       myBadges[badge] = pageKey;
     }
 
     const DomArr = [];
     for (const [badge, pageKey] of Object.entries(myBadges)) {
       if (!pageKey) continue;
-      const pageDoc = pageKvs[pageKey];
+      const relaDoc = relaKvs[pageKey];
       switch (badge) {
         case 'btsu':
           DomArr.push(
-            <a key={pageKey} className="btn btn-sm btn-outline-info" href={pageDoc._https_btoto} target="_blank" rel="noreferrer">{pageDoc.info.title}</a>
+            <a key={pageKey} className="btn btn-sm btn-outline-info" href={relaDoc._https_btoto} target="_blank" rel="noreferrer">{relaDoc.info.title}</a>
           );
           break;
         case 'btep':
           DomArr.push(
-            <a key={pageKey} className="btn btn-sm btn-outline-info" href={pageDoc._https_btoto} target="_blank" rel="noreferrer">{pageDoc._short}</a>
+            <a key={pageKey} className="btn btn-sm btn-outline-info" href={relaDoc._https_btoto} target="_blank" rel="noreferrer">{relaDoc._short}</a>
           );
           break;
         default:
