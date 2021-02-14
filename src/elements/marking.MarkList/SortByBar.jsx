@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Redux from '../redux';
-import Confs from '../confs';
+import Redux from "../../redux";
+import Confs from "../../confs";
 
 function SortByBar() {
 
@@ -31,7 +31,7 @@ function SortByBar() {
 
   const SortBtnDom = (props) => {
     const { type } = props;
-    const type_to_text = Confs.sortTypes;
+    const type_to_text = Confs.marking.sortTypes;
     if (type === sortBy) {
       return (
         <button type="button" className="btn btn-sm btn-link ml-2 cursor-normal">{type_to_text[type]}</button>
@@ -43,7 +43,7 @@ function SortByBar() {
   };
 
   return (
-    <div className="mt-3 d-flex justify-content-between align-items-center">
+    <div className="d-flex justify-content-between align-items-center">
       <PageInfoDom />
       <div>
         <SortBtnDom type="hot" />

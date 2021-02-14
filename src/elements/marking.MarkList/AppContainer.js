@@ -4,7 +4,9 @@ import Redux from "../../redux";
 import Confs from '../../confs';
 import Clock from "../common/Clock";
 
-import Mainer from "./Mainer";
+import LayoutHeader from "./LayoutHeader";
+import LayoutMainer from "./LayoutMainer";
+import LayoutFooter from "./LayoutFooter";
 
 function Rooter() {
 
@@ -75,7 +77,9 @@ function Rooter() {
 
   return (
     <>
-      <Mainer />
+      <LayoutHeader />
+      <LayoutMainer />
+      <LayoutFooter />
       <Clock />
     </>
   );

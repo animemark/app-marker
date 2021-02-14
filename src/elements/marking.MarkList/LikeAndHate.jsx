@@ -16,6 +16,10 @@ function LikeAndHate(props) {
   const meLiked = voteVal === 1 ? true : false;
   const meHated = voteVal === 2 ? true : false;
 
+  useEffect(() => {
+    window.resizeFrameHeight();
+  });
+
   const onClick_vote = (type) => {
     let voteVal = 0;
     if (type === 'like' && meLiked === false) {

@@ -70,7 +70,6 @@ function MarkShow() {
       return (
         <div>
           <button type="button" className="btn btn-sm btn-outline-danger" onClick={onClick_deleExec}>
-            <span className="font-monospace">({deleConfirm})</span>
             <span>Sure to delete?</span>
           </button>
         </div>
@@ -101,3 +100,5 @@ function MarkShow() {
 }
 
 export default MarkShow;
+
+// <span className="d-none font-monospace">({deleConfirm})</span>

@@ -1,5 +1,6 @@
 
 const format_limit_html = function (html) {
+  if(!html) return html;
   const str_onload = `onload="if(window.callback_limit_html_img_onload){window.callback_limit_html_img_onload(this)}"`;
   const str_onerro = `onerror="if(window.callback_limit_html_img_onerror){window.callback_limit_html_img_onerror(this)}"`;
   return String(html || '')
