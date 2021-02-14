@@ -4,10 +4,12 @@ import Confs from '../confs';
 export default createSlice({
   name: 'discuss',
   initialState: {
-    listAt: false, // id of the root list
-    postTo: false, // id for post submit by the root form
+    inited: 'initial', // pending, success, failure; first ajax load status
+
+    listAt: false, // what to be list
+    postTo: false, // post to where
     sortBy: false,
-    badges: false,
+    badges: false, // badges info
     pageDoc: null,
     pageKvs: {},
     postKvs: {},// post key(postOid) => value(postDoc), storage all post doc
@@ -21,7 +23,7 @@ export default createSlice({
       const listAt = action.payload;
       // must init the top level postLis here
       state.postLis = {
-        [listAt]: Confs.default_postLis_unit(),
+        [listAt]: Confs.discuss.default_postLis_unit(),
       };
       state.listAt = listAt;
     },
@@ -34,9 +36,9 @@ export default createSlice({
     set_sortBy(state, action) {
       const sortBy = action.payload;
       state.sortBy = sortBy;
-      window.localStorage.setItem(Confs.localStorageKeys.sortBy, sortBy);
+      window.localStorage.setItem(Confs.localStorageKeys.discuss_sortBy, sortBy);
       state.postLis = {
-        [state.listAt]: Confs.default_postLis_unit(),
+        [state.listAt]: Confs.discuss.default_postLis_unit(),
       };
     },
 
@@ -65,7 +67,7 @@ export default createSlice({
     addTo_postLis(state, action) {
       const { listAt, postOid } = action.payload;
       if (typeof state.postLis[listAt] === 'undefined') {
-        state.postLis[listAt] = Confs.default_postLis_unit();
+        state.postLis[listAt] = Confs.discuss.default_postLis_unit();
       }
       if (postOid && state.postLis[listAt].postOids.includes(postOid) === false) {
         state.postLis[listAt].postOids.unshift(postOid);
@@ -73,7 +75,7 @@ export default createSlice({
     },
     reset_postLis(state, action) {
       state.postLis = {
-        [state.listAt]: Confs.default_postLis_unit(),
+        [state.listAt]: Confs.discuss.default_postLis_unit(),
       };
     },
 
@@ -95,7 +97,7 @@ export default createSlice({
     // form
     init_form(state, action) {
       const postTo = action.payload;
-      state.formKvs[postTo] = Confs.default_formKvs_unit();
+      state.formKvs[postTo] = Confs.discuss.default_formKvs_unit();
     },
     set_form_showing(state, action) {
       const { postTo, showing } = action.payload;
@@ -122,9 +124,13 @@ export default createSlice({
         return;
       }
       if (typeof state.postLis[listAt] === 'undefined') {
-        state.postLis[listAt] = Confs.default_postLis_unit();
+        state.postLis[listAt] = Confs.discuss.default_postLis_unit();
       }
       state.postLis[listAt].loadStatus = 'pending';
+
+      if (['initial', 'failure'].includes(state.inited)) {
+        state.inited = 'pending';
+      }
     },
     [loadList.fulfilled]: (state, action) => {
       const { listAt, sortBy } = action.meta.arg;
@@ -156,6 +162,10 @@ export default createSlice({
       state.postLis[listAt].prevPos = prevPos;
       state.postLis[listAt].isLast = isLast;
       state.postLis[listAt].loadStatus = isLast ? 'no_more' : 'success';
+
+      if (state.inited === 'pending') {
+        state.inited = 'success';
+      }
     },
     [loadList.rejected]: (state, action) => {
       const { listAt, sortBy } = action.meta.arg;
@@ -163,6 +173,10 @@ export default createSlice({
         return;
       }
       state.postLis[listAt].loadStatus = 'failure';
+
+      if (state.inited === 'pending') {
+        state.inited = 'failure';
+      }
     },
 
     // createPost
@@ -185,18 +199,18 @@ export default createSlice({
 
       const listAt = postDoc.replyTo || state.listAt;// is not postTo, postTo maybe no a key of postLis
       if (typeof state.postLis[listAt] === 'undefined') {
-        state.postLis[listAt] = Confs.default_postLis_unit();
+        state.postLis[listAt] = Confs.discuss.default_postLis_unit();
       }
       if (postOid && state.postLis[listAt].postOids.includes(postOid) === false) {
         state.postLis[listAt].postOids.unshift(postOid);
       }
 
       // all ancestors node countReply +1
-      let ideKeys = postDoc.ideKeys;
+      let pageKeys = postDoc.pageKeys;
       let replyTo = postDoc.replyTo;
       let is_parent = true;
-      while (replyTo || ideKeys) {
-        if (ideKeys) {
+      while (replyTo || pageKeys) {
+        if (pageKeys) {
           const parentDoc = state.pageDoc;
           if (parentDoc) {
             parentDoc.countReply++;
@@ -213,7 +227,7 @@ export default createSlice({
           if (is_parent) {
             parentDoc.countChild++;
           }
-          ideKeys = parentDoc?.ideKeys;
+          pageKeys = parentDoc?.pageKeys;
           replyTo = parentDoc?.replyTo;
         }
         is_parent = false;

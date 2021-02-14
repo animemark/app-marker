@@ -1,37 +1,4 @@
 const confs = {
-  sortTypes: {
-    hot: 'Upvotes',
-    new: 'Newest',
-    old: 'Oldest',
-  },
-  sortByDefault: 'hot',
-
-  maxDepth: 4,// 0, 1, 2, 3, 4, 5, 6, auto
-
-  localStorageKeys: {
-    sortBy: 'discuss.sortBy',
-  },
-
-  default_postLis_unit() {
-    return {
-      loadStatus: 'initial',
-      postOids: [],
-      prevOid: null,
-      prevPos: null,
-      isLast: null,
-      newPosts: 0,
-    }
-  },
-
-  default_formKvs_unit() {
-    return {
-      errorNo: 0,
-      showing: true,
-      posting: false,
-      message: '',
-    }
-  },
-
   eno: {
     unknownError: 4001,
     systemError: 4002,
@@ -47,6 +14,67 @@ const confs = {
     captchaError: 4012,
     jwtokenError: 4013,
     permissionError: 4014,
+  },
+  localStorageKeys: {
+    discuss_sortBy: 'discuss.sortBy',
+    marking_sortBy: 'marking.sortBy',
+  },
+
+  discuss: {
+    sortTypes: {
+      hot: 'Upvotes',
+      new: 'Newest',
+      old: 'Oldest',
+    },
+    sortByDefault: 'hot',
+    maxDepth: 4,
+    default_postLis_unit() {
+      return {
+        loadStatus: 'initial',
+        postOids: [],
+        prevOid: null,
+        prevPos: null,
+        isLast: null,
+        newPosts: 0,
+      }
+    },
+    default_formKvs_unit() {
+      return {
+        errorNo: 0,
+        showing: true,
+        posting: false,
+        message: '',
+      }
+    },
+  },
+
+  marking: {
+    sortTypes: {
+      hot: 'Upvotes',
+      new: 'Newest',
+      old: 'Oldest',
+    },
+    sortByDefault: 'hot',
+    
+    default_markLis() {
+      return {
+        loadStatus: 'initial',
+        markOids: [],
+        prevOid: null,
+        prevPos: null,
+        isLast: null,
+      };
+    },
+
+    default_formObj() {
+      return {
+        errorNo: 0,
+        posting: false,
+        martus: 'wish',
+        score: 0,
+        comment: '',
+      };
+    },
   },
 };
 

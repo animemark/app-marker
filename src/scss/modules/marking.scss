@@ -1,0 +1,130 @@
+.marking-form {
+  div.info {
+    border: 2px solid #dbdfe4;
+    position: relative;
+    margin: 0;
+    padding: 1rem;
+    //font-size: 1.5rem;
+  }
+  div.alert.error {
+    position: relative;
+    margin-bottom: 0;
+    padding: 0.5rem 0.75rem;
+    &::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: -3px;
+      right: -2px;
+      border-top: 2px solid #dbdfe4;
+    }
+  }
+  div.editor {
+    background: #fff;
+    border: 2px solid #dbdfe4;
+    position: relative;
+    margin: 0;
+    -webkit-appearance: none;
+  }
+  textarea {
+    width: 100%;
+    height: 5rem;
+  }
+  div.headBar{
+    position: relative;
+    height: 31px;
+    border-bottom: 2px solid #dbdfe4;
+    background-color: #dbdfe4;
+  }
+  div.toolBar {
+    position: relative;
+    height: 31px;
+    border-top: 2px solid #dbdfe4;
+    background-color: #f6f8f9;
+
+    button.delete {
+    }
+    button.submit {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: 0;
+      height: 33px;
+      box-shadow: none;
+    }
+  }
+}
+
+.marking-show {
+  div.info {
+    border: 2px solid #dbdfe4;
+    position: relative;
+    margin: 0;
+    padding: 1rem;
+    //font-size: 1.5rem;
+  }
+  div.alert.error {
+    position: relative;
+    margin-bottom: 0;
+    padding: 0.5rem 0.75rem;
+    &::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: -3px;
+      right: -2px;
+      border-top: 2px solid #dbdfe4;
+    }
+  }
+  div.MyMark {
+    background: #fff;
+    border: 2px solid #dbdfe4;
+    position: relative;
+    margin: 0;
+    -webkit-appearance: none;
+  }
+  div.headBar{
+    position: relative;
+    height: 31px;
+    border-bottom: 2px solid #dbdfe4;
+    background-color: #dbdfe4;
+  }
+  div.toolBar {
+    position: relative;
+    height: 31px;
+    border-top: 2px solid #dbdfe4;
+    background-color: #f6f8f9;
+    button.delete {
+    }
+    button.submit {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: 0;
+      height: 33px;
+      box-shadow: none;
+    }
+  }
+}
+
+
+.marking-item {
+  img.avatar {
+    width: 40px;
+    height: 40px;
+  }
+  .marking-subs {
+    padding-left: 40px;
+  }
+}
+
+.marking-badges {
+  .btn {
+    padding: 1px 5px;
+    font-size: 0.75rem;
+  }
+}
+
+.marking-indent {
+  padding-left: 40px;
+}

@@ -1,11 +1,8 @@
 import React from "react";
-import LayoutRooter from "./components/LayoutRooter";
 
 function App() {
   return (
-    <>
-      <LayoutRooter />
-    </>
+    <div>APP</div>
   );
 }
 

@@ -1,0 +1,18 @@
+
+$primary: #167990;
+$body-bg: #181818;
+$info: #6f42c1;
+
+$body-color: #ccc;
+$link-color: lighten($primary, 10%);
+$link-hover-color: lighten($link-color, 10%);
+
+body {
+  color: $body-color;
+}
+a {
+  color: lighten($link-color, 10%);
+}
+a:hover {
+  color: $link-hover-color;
+}

@@ -9,33 +9,10 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="AnimeMark Community" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Discuss Original</title>
-    <!--
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="%PUBLIC_URL%/css/app-dark.min.css?v=2021.02.03.01"
-    />
-    -->
+    <title>AnimeMark Community</title>
     <link
       type="text/css"
       rel="stylesheet"
@@ -68,19 +45,37 @@
   <body id="body">
     <div id="root" class="wrapper"></div>
     <script>
-      function resizeFrameHeight(where = "") {
-        if (!window.parent || !window.parent.set_discuss_iframe_height) {
-          //console.log("no window.parent.set_discuss_iframe_height ???");
+      // themes
+      (function () {
+        const theme = "dark"; //window.localStorage.getItem('site.theme');
+        let css_file = "";
+        switch (theme) {
+          case "dark":
+            css_file = `%PUBLIC_URL%/css/theme-${theme}.min.css`;
+            break;
+        }
+        if (!css_file) return;
+        const o_head = document.getElementsByTagName("head")[0];
+        const o_link = document.createElement("link");
+        o_link.id = "dynamic-style";
+        o_link.href = css_file;
+        o_link.setAttribute("rel", "stylesheet");
+        o_link.setAttribute("media", "all");
+        o_link.setAttribute("type", "text/css");
+        o_head.appendChild(o_link);
+      })();
+      function resizeFrameHeight(ifr) {
+        if (!window.parent || !window.parent.set_marker_app_iframe_height) {
+          //console.log("no window.parent.set_marker_app_iframe_height ???");
           return;
         }
         const o_root = document.getElementById("root");
-        //const o_root = document.body;
         const val = Math.max(
           o_root.scrollHeight || 0,
           o_root.clientHeight || 0,
           o_root.offsetHeight || 0
         );
-        window.parent.set_discuss_iframe_height(val);
+        window.parent.set_marker_app_iframe_height(ifr, val);
       }
       function getSelectionParentElement() {
         let o_par = null;
@@ -126,15 +121,5 @@
         return {};
       }
     </script>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
