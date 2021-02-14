@@ -14,9 +14,12 @@ function MarkForm(props) {
 
   const { ssconfs } = useSelector(state => state.ssconfs);
   const { pageKey, formObj } = useSelector((state) => state.marking);
-
   const { errorNo, posting, martus, score, comment } = formObj;
 
+  useEffect(() => {
+    window.resizeFrameHeight();
+  });
+  
   const onClick_submit = function () {
     if (!martus) {
       dispatch(

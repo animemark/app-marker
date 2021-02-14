@@ -6,9 +6,6 @@ import Confs from "../../confs";
 import MarkList from "./MarkList";
 function Mainer() {
 
-  const dispatch = useDispatch();
-  const { editing } = useSelector(state => state.marking);
-
   return (
     <div className="Mainer">
       <div className="w-100">

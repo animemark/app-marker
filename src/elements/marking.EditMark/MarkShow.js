@@ -13,6 +13,10 @@ function MarkShow() {
   const { markDoc, deleing } = useSelector((state) => state.marking);
 
   useEffect(() => {
+    window.resizeFrameHeight();
+  });
+  
+  useEffect(() => {
     if (deleConfirm) {
       const timer = setTimeout(() => {
         set_deleConfirm(deleConfirm - 1);

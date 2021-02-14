@@ -11,6 +11,10 @@ function Mainer() {
   const dispatch = useDispatch();
 
   const { editing } = useSelector(state => state.marking);
+  
+  useEffect(() => {
+    window.resizeFrameHeight();
+  });
 
   return (
     <div className="Mainer">

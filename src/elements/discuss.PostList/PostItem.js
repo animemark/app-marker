@@ -33,7 +33,7 @@ function PostItem(props) {
   const poerDoc = userKvs?.[poerIid];
 
   useEffect(() => {
-    window.resizeFrameHeight('PostItem');
+    window.resizeFrameHeight();
   });
 
   const toggle_showFormStatus = () => {

@@ -12,13 +12,13 @@ function MarkList(props) {
   const { pageKey, sortBy, markLis: { loadStatus, markOids, prevOid, prevPos } } = useSelector(state => state.marking);
 
   useEffect(() => {
-    if (loadStatus === "initial") {
-      loadMoreAct();
-    }
+    window.resizeFrameHeight();
   });
 
   useEffect(() => {
-    window.resizeFrameHeight();
+    if (loadStatus === "initial") {
+      loadMoreAct();
+    }
   });
 
   const loadMoreAct = () => {

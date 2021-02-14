@@ -12,6 +12,10 @@ function Rooter() {
   const { inited, pageKey, sortBy } = useSelector(state => state.marking);
 
   useEffect(() => {
+    window.resizeFrameHeight();
+  });
+  
+  useEffect(() => {
     if (pageKey === false) {
       const pars = window.get_url_params();
       const pval = pars.pageKey || '';

@@ -56,8 +56,21 @@
           o_root.clientHeight || 0,
           o_root.offsetHeight || 0
         );
-        const url = location.href;
-        window.parent.set_marker_app_iframe_height(url, val);
+
+        const o_url = new URL(url);
+        let fid = "";
+        switch (o_url.pathname) {
+          case "/discuss/PostList.html":
+            fid = "app.discuss.PostList";
+            break;
+          case "/marking/EditMark.html":
+            fid = "app.marking.EditMark";
+            break;
+          case "/marking/MarkList.html":
+            fid = "app.marking.MarkList";
+            break;
+        }
+        window.parent.set_marker_app_iframe_height(fid, val);
       }
       function getSelectionParentElement() {
         let o_par = null;
