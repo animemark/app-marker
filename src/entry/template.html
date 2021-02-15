@@ -1,143 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
-    />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="AnimeMark Community" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>AnimeMark Community!</title>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="%PUBLIC_URL%/emojis/_base.css"
-    />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="%PUBLIC_URL%/emojis/browser.css"
-    />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="%PUBLIC_URL%/emojis/twtr.css"
-      media="print"
-      onload="this.media='all'"
-    />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://static.animemark.com/3rds/fontawesome-free-5.9.0-web/css/all.min.css"
-      media="print"
-      onload="this.media='all'"
-      crossorigin="anonymous"
-    />
-    <script>
-      document.domain = "bato.to";
-    </script>
-  </head>
-  <body id="body">
-    <div id="root" class="wrapper"></div>
-    <script>
-      function resizeFrameHeight() {
-        if (!window.parent || !window.parent.set_marker_app_iframe_height) {
-          //console.log("no window.parent.set_marker_app_iframe_height ???");
-          return;
-        }
-        const o_root = document.getElementById("root");
-        const val = Math.max(
-          o_root.scrollHeight || 0,
-          o_root.clientHeight || 0,
-          o_root.offsetHeight || 0
-        );
 
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="AnimeMark Community" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <title>AnimeMark Community!</title>
+  <link type="text/css" rel="stylesheet" href="%PUBLIC_URL%/emojis/_base.css" />
+  <link type="text/css" rel="stylesheet" href="%PUBLIC_URL%/emojis/browser.css" />
+  <link type="text/css" rel="stylesheet" href="%PUBLIC_URL%/emojis/twtr.css" media="print" onload="this.media='all'" />
+  <link type="text/css" rel="stylesheet"
+    href="https://static.animemark.com/3rds/fontawesome-free-5.9.0-web/css/all.min.css" media="print"
+    onload="this.media='all'" crossorigin="anonymous" />
+  <script>
+    document.domain = "bato.to";
+  </script>
+</head>
+
+<body id="body">
+  <div id="root" class="wrapper"></div>
+  <script>
+    function resizeFrameHeight() {
+      if (!window.parent || !window.parent.set_marker_app_iframe_height) {
+        //console.log("no window.parent.set_marker_app_iframe_height ???");
+        return;
+      }
+      const o_root = document.getElementById("root");
+      const val = Math.max(
+        o_root.scrollHeight || 0,
+        o_root.clientHeight || 0,
+        o_root.offsetHeight || 0
+      );
+      const o_url = new URL(window.location.href);
+      let fid = "";
+      switch (o_url.pathname) {
+        case "/discuss/PostList.html":
+          fid = "app.discuss.PostList";
+          break;
+        case "/marking/EditMark.html":
+          fid = "app.marking.EditMark";
+          break;
+        case "/marking/MarkList.html":
+          fid = "app.marking.MarkList";
+          break;
+      }
+      window.parent.set_marker_app_iframe_height(fid, val);
+    }
+    function getSelectionParentElement() {
+      let o_par = null;
+      const o_sel = window.getSelection();
+      if (o_sel.rangeCount) {
+        o_par = o_sel.getRangeAt(0).commonAncestorContainer;
+        if (o_par.nodeType != 1) {
+          o_par = o_par.parentNode;
+        }
+      }
+      return o_par;
+    }
+    function setEndOfContenteditable(contentEditableElement) {
+      const range = document.createRange();
+      range.selectNodeContents(contentEditableElement);
+      range.collapse(false);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    function callback_limit_html_img_onload(obj) {
+      resizeFrameHeight();
+    }
+    function callback_limit_html_img_onerror(obj) {
+      resizeFrameHeight();
+    }
+    function get_url_params() {
+      try {
+        const pars = {};
         const o_url = new URL(window.location.href);
-        let fid = "";
-        switch (o_url.pathname) {
-          case "/discuss/PostList.html":
-            fid = "app.discuss.PostList";
-            break;
-          case "/marking/EditMark.html":
-            fid = "app.marking.EditMark";
-            break;
-          case "/marking/MarkList.html":
-            fid = "app.marking.MarkList";
-            break;
+        const o_par = o_url.searchParams;
+        const keys = o_par.keys();
+        for (const key of keys) {
+          const val = o_par.get(key);
+          pars[key] = val;
         }
-        window.parent.set_marker_app_iframe_height(fid, val);
+        return pars;
+      } catch (error) {
+        console.log(error);
       }
-      function getSelectionParentElement() {
-        let o_par = null;
-        const o_sel = window.getSelection();
-        if (o_sel.rangeCount) {
-          o_par = o_sel.getRangeAt(0).commonAncestorContainer;
-          if (o_par.nodeType != 1) {
-            o_par = o_par.parentNode;
-          }
-        }
-        return o_par;
+      return {};
+    }
+  </script>
+  <script>
+    // themes we may have more theme in the future
+    (function () {
+      const upars = get_url_params();
+      const theme = upars.theme;
+      const appVer = upars.appVer;
+      let css_file = "";
+      switch (theme) {
+        case "dark":
+          css_file = `%PUBLIC_URL%/css/theme-${theme}.min.css?appVer=${appVer}`;
+          break;
+        default:
+          break;
       }
-      function setEndOfContenteditable(contentEditableElement) {
-        const range = document.createRange();
-        range.selectNodeContents(contentEditableElement);
-        range.collapse(false);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
+      if (!css_file) return;
+      const o_head = document.getElementsByTagName("head")[0];
+      const o_link = document.createElement("link");
+      o_link.id = "dynamic-style";
+      o_link.href = css_file;
+      o_link.setAttribute("rel", "stylesheet");
+      o_link.setAttribute("media", "all");
+      o_link.setAttribute("type", "text/css");
+      o_head.appendChild(o_link);
+    })();
+  </script>
+  <script src="https://app-marker.bato.to/api/common/ssconfs.js" crossOrigin="anonymous"></script>
+</body>
 
-      function callback_limit_html_img_onload(obj) {
-        resizeFrameHeight("limit_html_img");
-      }
-      function callback_limit_html_img_onerror(obj) {
-        resizeFrameHeight("limit_html_img");
-      }
-
-      function get_url_params() {
-        try {
-          const pars = {};
-          const o_url = new URL(window.location.href);
-          const o_par = o_url.searchParams;
-          const keys = o_par.keys();
-          for (const key of keys) {
-            const val = o_par.get(key);
-            pars[key] = val;
-          }
-          return pars;
-        } catch (error) {
-          console.log(error);
-        }
-        return {};
-      }
-    </script>
-    <script>
-      // themes
-      (function () {
-        const upars = get_url_params();
-        const theme = upars.theme;
-        const appVer = upars.appVer;
-        let css_file = "";
-        switch (theme) {
-          case "dark":
-            css_file = `%PUBLIC_URL%/css/theme-${theme}.min.css?appVer=${appVer}`;
-            break;
-        }
-        if (!css_file) return;
-        const o_head = document.getElementsByTagName("head")[0];
-        const o_link = document.createElement("link");
-        o_link.id = "dynamic-style";
-        o_link.href = css_file;
-        o_link.setAttribute("rel", "stylesheet");
-        o_link.setAttribute("media", "all");
-        o_link.setAttribute("type", "text/css");
-        o_head.appendChild(o_link);
-      })();
-    </script>
-  </body>
 </html>

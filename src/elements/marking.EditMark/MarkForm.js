@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Redux from "../../redux";
 import Confs from "../../confs";
+import Funcs from '../../funcs';
 
 import EditArea from "../common/EditArea";
 import EditToolBar from "../common/EditToolBar";
+
+const _confs = window._ssconfs;
 
 function MarkForm(props) {
 
@@ -12,12 +15,14 @@ function MarkForm(props) {
 
   const dispatch = useDispatch();
 
-  const { ssconfs } = useSelector(state => state.ssconfs);
   const { pageKey, formObj } = useSelector((state) => state.marking);
   const { errorNo, posting, martus, score, comment } = formObj;
 
-  const _docKind = 'comic';
-  const _confs_martus = ssconfs.martus[_docKind];
+  const {
+    docKind: _docKind
+  } = Funcs.common.info_from_pageKey(pageKey);
+  const _confs_martus = _confs.marking.martus[_docKind];
+  const _confs_scores = _confs.marking.scores;
 
   useEffect(() => {
     window.resizeFrameHeight();
@@ -116,7 +121,7 @@ function MarkForm(props) {
       <label className="form-check-label" htmlFor={`score_0`}>[N/A]</label>
     </div>
   ));
-  for (const [file, item] of Object.entries(ssconfs.scores)) {
+  for (const [file, item] of Object.entries(_confs_scores)) {
     const v_score = Number(file);
     const v_title = item.text;
     MyRatingDoms.push((

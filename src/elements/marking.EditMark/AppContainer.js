@@ -52,7 +52,7 @@ function Rooter() {
       // refresh icon
       return (
         <div className="d-flex justify-content-center align-items-center cursor-pointer" onClick={firstLoad}>
-          <i className="fas fa-3x fa-sync-alt"></i>
+          <i className="fas fa-2x fa-sync-alt"></i>
         </div>
       );
 

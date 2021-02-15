@@ -4,12 +4,13 @@ import Redux from '../../redux';
 import Confs from "../../confs";
 import Funcs from "../../funcs";
 
+const _confs = window._ssconfs;
+
 function MarkShow() {
 
   const [deleConfirm, set_deleConfirm] = useState(0);
 
   const dispatch = useDispatch();
-  const { ssconfs } = useSelector(state => state.ssconfs);
   const { markDoc, deleing } = useSelector((state) => state.marking);
 
   useEffect(() => {
@@ -53,7 +54,9 @@ function MarkShow() {
   }
 
   const { martus, score, _comment_in_html, _docKind } = markDoc;
-  const _confs_martus = ssconfs.martus[_docKind];
+
+  const _confs_martus = _confs.marking.martus[_docKind];
+  const _confs_scores = _confs.marking.scores;
 
   const EditBtnDom = () => {
     if (deleing) {
@@ -93,7 +96,7 @@ function MarkShow() {
           <EditBtnDom />
         </div>
         <div className="mt-1">My status: {_confs_martus[martus].text}</div>
-        <div className="mt-1">My rating: {score ? `(${score}) ${ssconfs.scores[score].text}` : '[N/A]'}</div>
+        <div className="mt-1">My rating: {score ? `(${score}) ${_confs_scores[score].text}` : '[N/A]'}</div>
         <div className="mt-1" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(_comment_in_html) }}></div>
       </div>
     </div>

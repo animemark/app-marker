@@ -66,7 +66,7 @@ function Rooter() {
   if (!listAt || !postTo || !sortBy || badges === false || ['initial', 'pending'].includes(inited)) {
     return (
       <div className="d-flex justify-content-center align-items-center">
-        <i className="fas fa-3x fa-circle-notch fa-spin"></i>
+        <i className="fas fa-2x fa-circle-notch fa-spin"></i>
       </div>
     );
   }
@@ -74,7 +74,7 @@ function Rooter() {
   if (inited === 'failure') {
     return (
       <div className="d-flex justify-content-center align-items-center cursor-pointer" onClick={firstLoad}>
-        <i className="fas fa-3x fa-sync-alt"></i>
+        <i className="fas fa-2x fa-sync-alt"></i>
       </div>
     );
   }

@@ -8,11 +8,12 @@ import TimeAgo from "../common/TimeAgo";
 import RateStar from "../common/RateStars";
 import LikeAndHate from "./LikeAndHate";
 
+const _confs = window._ssconfs;
+
 function MarkItem(props) {
   const { markOid } = props;
   const dispatch = useDispatch();
 
-  const { ssconfs } = useSelector(state => state.ssconfs);
   const { userIid, userKvs } = useSelector(state => state.users);
   const { badges, markKvs } = useSelector(state => state.marking);
 
@@ -29,7 +30,7 @@ function MarkItem(props) {
   }
 
   const { _docKind } = markDoc;
-  const _confs_martus = ssconfs.martus[_docKind];
+  const _confs_martus = _confs.marking.martus[_docKind];
 
   return (
     <div className="discuss-item lv1">
