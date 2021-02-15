@@ -28,8 +28,8 @@ function MarkItem(props) {
     return null;
   }
 
-  const { _docType } = markDoc;
-  const _confs_martus = ssconfs.martus[_docType];
+  const { _docKind } = markDoc;
+  const _confs_martus = ssconfs.martus[_docKind];
 
   return (
     <div className="discuss-item lv1">

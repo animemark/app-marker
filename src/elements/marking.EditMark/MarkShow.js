@@ -52,8 +52,8 @@ function MarkShow() {
     );
   }
 
-  const { martus, score, _comment_in_html, _docType } = markDoc;
-  const _confs_martus = ssconfs.martus[_docType];
+  const { martus, score, _comment_in_html, _docKind } = markDoc;
+  const _confs_martus = ssconfs.martus[_docKind];
 
   const EditBtnDom = () => {
     if (deleing) {

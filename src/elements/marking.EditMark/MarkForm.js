@@ -16,6 +16,9 @@ function MarkForm(props) {
   const { pageKey, formObj } = useSelector((state) => state.marking);
   const { errorNo, posting, martus, score, comment } = formObj;
 
+  const _docKind = 'comic';
+  const _confs_martus = ssconfs.martus[_docKind];
+
   useEffect(() => {
     window.resizeFrameHeight();
   });
@@ -97,7 +100,7 @@ function MarkForm(props) {
   };
 
   const MyStatusDoms = [];
-  for (const [file, item] of Object.entries(ssconfs.martus.comic)) {
+  for (const [file, item] of Object.entries(_confs_martus)) {
     MyStatusDoms.push((
       <div key={file} className="form-check form-check-inline">
         <input className="form-check-input" type="radio" id={`martus_${file}`} name="martus" value={file} checked={martus === file} onChange={onChange_martus} />
