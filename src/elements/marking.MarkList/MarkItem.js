@@ -16,14 +16,20 @@ function MarkItem(props) {
   const { userIid, userKvs } = useSelector(state => state.users);
   const { badges, markKvs } = useSelector(state => state.marking);
 
-  const markDoc = markKvs?.[markOid];
-
-  const mkerIid = markDoc?.userIid;
-  const mkerDoc = userKvs?.[mkerIid];
-
   useEffect(() => {
     window.resizeFrameHeight();
   });
+
+  const markDoc = markKvs?.[markOid];
+  const mkerIid = markDoc?.userIid;
+  const mkerDoc = userKvs?.[mkerIid];
+
+  if (!markDoc) {
+    return null;
+  }
+
+  const { _docType } = markDoc;
+  const _confs_martus = ssconfs.martus[_docType];
 
   return (
     <div className="discuss-item lv1">
@@ -38,7 +44,7 @@ function MarkItem(props) {
             </a>
           </div>
           <div className="d-flex">
-            <div>{ssconfs.martus[markDoc.martus].text}</div>
+            <div>{_confs_martus[markDoc.martus].text}</div>
             {Boolean(markDoc.score) &&
               <RateStar score={markDoc.score} css="ms-2" />
             }

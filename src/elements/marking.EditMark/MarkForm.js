@@ -19,7 +19,7 @@ function MarkForm(props) {
   useEffect(() => {
     window.resizeFrameHeight();
   });
-  
+
   const onClick_submit = function () {
     if (!martus) {
       dispatch(
@@ -97,7 +97,7 @@ function MarkForm(props) {
   };
 
   const MyStatusDoms = [];
-  for (const [file, item] of Object.entries(ssconfs.martus)) {
+  for (const [file, item] of Object.entries(ssconfs.martus.comic)) {
     MyStatusDoms.push((
       <div key={file} className="form-check form-check-inline">
         <input className="form-check-input" type="radio" id={`martus_${file}`} name="martus" value={file} checked={martus === file} onChange={onChange_martus} />

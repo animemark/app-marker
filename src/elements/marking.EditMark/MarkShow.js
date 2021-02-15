@@ -15,7 +15,7 @@ function MarkShow() {
   useEffect(() => {
     window.resizeFrameHeight();
   });
-  
+
   useEffect(() => {
     if (deleConfirm) {
       const timer = setTimeout(() => {
@@ -52,7 +52,8 @@ function MarkShow() {
     );
   }
 
-  const { martus, score, comment, _comment_in_html } = markDoc;
+  const { martus, score, _comment_in_html, _docType } = markDoc;
+  const _confs_martus = ssconfs.martus[_docType];
 
   const EditBtnDom = () => {
     if (deleing) {
@@ -91,7 +92,7 @@ function MarkShow() {
           <b>My Mark</b>
           <EditBtnDom />
         </div>
-        <div className="mt-1">My status: {ssconfs.martus[martus].text}</div>
+        <div className="mt-1">My status: {_confs_martus[martus].text}</div>
         <div className="mt-1">My rating: {score ? `(${score}) ${ssconfs.scores[score].text}` : '[N/A]'}</div>
         <div className="mt-1" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(_comment_in_html) }}></div>
       </div>
