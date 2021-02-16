@@ -95,7 +95,7 @@
     }
   </script>
   <script>
-    // themes we may have more theme in the future
+    // themes, we may have more themes in the future
     (function () {
       const upars = get_url_params();
       const theme = upars.theme;
@@ -109,14 +109,18 @@
           break;
       }
       if (!css_file) return;
-      const o_head = document.getElementsByTagName("head")[0];
+      const o_node = document.getElementsByTagName("body")[0];
       const o_link = document.createElement("link");
       o_link.id = "dynamic-style";
       o_link.href = css_file;
       o_link.setAttribute("rel", "stylesheet");
       o_link.setAttribute("media", "all");
       o_link.setAttribute("type", "text/css");
-      o_head.appendChild(o_link);
+      if (o_node.prepend) {
+        o_node.prepend(o_link);
+      } else {
+        o_node.append(o_link);
+      }
     })();
   </script>
   <script src="https://app-marker.bato.to/api/common/ssconfs.js" crossOrigin="anonymous"></script>

@@ -7,6 +7,7 @@ import Funcs from "../../funcs";
 import TimeAgo from "../common/TimeAgo";
 import RateStar from "../common/RateStars";
 import LikeAndHate from "./LikeAndHate";
+import RelaTitle from "./RelaTitle";
 
 const _confs = window._ssconfs;
 
@@ -15,7 +16,7 @@ function MarkItem(props) {
   const dispatch = useDispatch();
 
   const { userIid, userKvs } = useSelector(state => state.users);
-  const { badges, markKvs } = useSelector(state => state.marking);
+  const { markKvs, relaKvs } = useSelector(state => state.marking);
 
   useEffect(() => {
     window.resizeFrameHeight();
@@ -33,8 +34,11 @@ function MarkItem(props) {
   const _confs_martus = _confs.marking.martus[_docKind];
 
   return (
-    <div className="discuss-item lv1">
-      <div className="d-flex justify-content-start align-items-center discuss-head">
+    <div className="marking-item">
+
+      <RelaTitle markOid={markOid} />
+
+      <div className="mt-2 d-flex justify-content-start align-items-center marking-head">
         <a href={mkerDoc._https_btoto} target="_blank" rel="noreferrer">
           <img className="avatar" src={mkerDoc._https_avatar} alt="" />
         </a>
@@ -55,7 +59,9 @@ function MarkItem(props) {
           <i className="d-none fas fa-ellipsis-v text-muted"></i>
         </div>
       </div>
+
       <div className="mt-2" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(markDoc._comment_in_html) }}></div>
+      
       <div className="mt-2 d-flex justify-content-between align-items-center small text-muted">
         <TimeAgo time={markDoc.dateCreate} css="d-inline small text-muted" />
         <LikeAndHate markOid={markOid} />

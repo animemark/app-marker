@@ -5,8 +5,21 @@ export default createSlice({
   name: 'marking',
   initialState: {
 
-    // sharing
-    inited: 'initial', // pending, success, failure; first ajax load status
+    // shared
+    /**
+     * params got from the url
+     * define the what the app will be
+     */
+    params: false,
+
+    /**
+     * first ajax load status
+     * initial
+     * pending
+     * success
+     * failure
+     */
+    status: 'initial',
 
     // EditMark
     pageKey: false,
@@ -17,7 +30,7 @@ export default createSlice({
 
     // MarkList
     pageKeys: false,
-    sortBy: false,
+    sortBy: Confs.marking.sortByDefault,
     badges: false,
     markKvs: {},
     markLis: Confs.marking.default_markLis(),
@@ -27,6 +40,14 @@ export default createSlice({
   },
   reducers: {
     // base
+    set_params(state, action) {
+      state.params = action.payload;
+    },
+    set_status(state, action) {
+      state.status = action.payload;
+    },
+
+
     set_pageKey(state, action) {
       state.pageKey = action.payload;
     },
@@ -66,7 +87,7 @@ export default createSlice({
     set_sortBy(state, action) {
       const sortBy = action.payload;
       state.sortBy = sortBy;
-      window.localStorage.setItem(Confs.localStorageKeys.marking_sortBy, sortBy);
+      //window.localStorage.setItem(Confs.localStorageKeys.marking_sortBy, sortBy);
       state.markLis = Confs.marking.default_markLis();
     },
 
@@ -90,13 +111,13 @@ export default createSlice({
 
     // myMark edit
     [myMark.pending]: (state, action) => {
-      state.inited = 'pending';
+      state.status = 'pending';
     },
     [myMark.fulfilled]: (state, action) => {
       const { error, eno, res } = action.payload;
 
       if (error || eno) {
-        state.inited = 'failure';
+        state.status = 'failure';
         return;
       }
 
@@ -110,10 +131,10 @@ export default createSlice({
           comment: markDoc.comment || '',
         });
       }
-      state.inited = 'success';
+      state.status = 'success';
     },
     [myMark.rejected]: (state, action) => {
-      state.inited = 'failure';
+      state.status = 'failure';
     },
 
     // upsertMark
@@ -170,8 +191,8 @@ export default createSlice({
       state.markLis.loadStatus = 'pending';
 
       // prevent second time init
-      if (['initial', 'failure'].includes(state.inited)) {
-        state.inited = 'pending';
+      if (['initial', 'failure'].includes(state.status)) {
+        state.status = 'pending';
       }
     },
     [loadList.fulfilled]: (state, action) => {
@@ -184,10 +205,13 @@ export default createSlice({
         state.markLis.loadStatus = 'failure';
         return;
       }
-      const { markLis, prevOid, prevPos, isLast, voteKvs } = res;
+      const { markLis, prevOid, prevPos, isLast, voteKvs, relaKvs } = res;
 
       if (voteKvs) {
         Object.assign(state.voteKvs, voteKvs);
+      }
+      if (relaKvs) {
+        Object.assign(state.relaKvs, relaKvs);
       }
 
       for (const row of markLis) {
@@ -202,8 +226,8 @@ export default createSlice({
       state.markLis.isLast = isLast;
       state.markLis.loadStatus = isLast ? 'no_more' : 'success';
 
-      if (state.inited === 'pending') {
-        state.inited = 'success';
+      if (state.status === 'pending') {
+        state.status = 'success';
       }
     },
     [loadList.rejected]: (state, action) => {
@@ -213,8 +237,8 @@ export default createSlice({
       }
       state.markLis.loadStatus = 'failure';
 
-      if (state.inited === 'pending') {
-        state.inited = 'failure';
+      if (state.status === 'pending') {
+        state.status = 'failure';
       }
     },
 

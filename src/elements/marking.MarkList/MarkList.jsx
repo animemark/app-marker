@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Redux from "../../redux";
 import Confs from "../../confs";
 
+import SortByBar from "./SortByBar";
 import MarkItem from "./MarkItem";
 
 function MarkList(props) {
 
   const dispatch = useDispatch();
 
-  const { pageKey, sortBy, markLis: { loadStatus, markOids, prevOid, prevPos } } = useSelector(state => state.marking);
+  const { params, sortBy, markLis: { loadStatus, markOids, prevOid, prevPos } } = useSelector(state => state.marking);
 
   useEffect(() => {
     window.resizeFrameHeight();
@@ -23,8 +24,8 @@ function MarkList(props) {
 
   const loadMoreAct = () => {
     const data = {
-      pageKey,
       sortBy,
+      ...params,
       prevOid,
       prevPos,
     };
@@ -32,37 +33,50 @@ function MarkList(props) {
   };
 
   const LoadMoreDom = () => {
+    let BtnDom = null;
     switch (loadStatus) {
       case 'initial':
-        return (
+        BtnDom = (
           <button type="button" className="btn btn-sm btn-secondary" onClick={() => loadMoreAct()}>Start Load</button>
         );
+        break;
       case 'success':
-        return (
+        BtnDom = (
           <button type="button" className="btn btn-sm btn-secondary" onClick={() => loadMoreAct()}>Load More</button>
         );
+        break;
       case 'failure':
-        return (
+        BtnDom = (
           <button type="button" className="btn btn-sm btn-secondary" onClick={() => loadMoreAct()}>Try Again</button>
         );
+        break;
       case 'pending':
-        return (
+        BtnDom = (
           <button type="button" className="btn btn-sm btn-secondary disabled">
             <i className="fas fa-circle-notch fa-spin"></i>
           </button>
         );
+        break;
       case 'no_more':
         if (markOids?.length) {
-          return (
+          BtnDom = (
             <button type="button" className="btn btn-sm btn-light disabled">No More</button>
           );
         } else {
-          return (
+          BtnDom = (
             <button type="button" className="btn btn-sm btn-light disabled">Be the first to make mark.</button>
           );
         }
+        break;
       default:
         break;
+    }
+    if (BtnDom) {
+      return (
+        <div className="d-grid load-more">
+          {BtnDom}
+        </div>
+      );
     }
     return null;
   };
@@ -72,20 +86,17 @@ function MarkList(props) {
   ));
 
   return (
-    <div className="marking-list">
-      { itemList_to_DomList?.length > 0 &&
-        <div className={`mt-3 d-grid gap-3`}>
-          {itemList_to_DomList}
-        </div>
+    <div className="d-grid gap-3 marking-list">
+      {Boolean(params.showSortByBar) &&
+        <SortByBar />
       }
+      {itemList_to_DomList}
       { loadStatus === 'failure' &&
-        <div className="mt-3 alert alert-danger">
+        <div className="alert alert-danger">
           An exception was encountered while loading the list.
         </div>
       }
-      <div className="mt-3 d-grid gap-2 load-more">
-        <LoadMoreDom />
-      </div>
+      <LoadMoreDom />
     </div>
   );
 }

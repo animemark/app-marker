@@ -11,33 +11,26 @@ import LayoutFooter from "./LayoutFooter";
 function Rooter() {
 
   const dispatch = useDispatch();
-  const { inited, pageKey, sortBy } = useSelector(state => state.marking);
+  const { params, status, sortBy} = useSelector(state => state.marking);
 
   useEffect(() => {
     window.resizeFrameHeight();
   });
-  
+
   useEffect(() => {
-    if (pageKey === false) {
-      const pars = window.get_url_params();
-      const pval = pars.pageKey || '';
-      dispatch(Redux.actions.marking.set_pageKey(pval));
+    if (params === false) {
+      const params = window.get_url_params();
+      const sortBy = params.sortBy || window.localStorage.getItem(Confs.localStorageKeys.marking_sortBy);
+      if (sortBy) {
+        dispatch(Redux.actions.marking.set_sortBy(sortBy));
+      }
+      dispatch(Redux.actions.marking.set_params(params));
     }
   });
 
-
   useEffect(() => {
-    if (sortBy === false) {
-      let type = window.localStorage.getItem(Confs.localStorageKeys.marking_sortBy);
-      type = Confs.marking.sortTypes[type] ? type : Confs.marking.sortByDefault;
-      dispatch(Redux.actions.marking.set_sortBy(type));
-    }
-  });
-
-
-  useEffect(() => {
-    if (pageKey && sortBy) {
-      if (inited === 'initial') {
+    if (params) {
+      if (status === 'initial') {
         firstLoad();
       }
     }
@@ -45,13 +38,13 @@ function Rooter() {
 
   const firstLoad = () => {
     const date = {
-      pageKey,
       sortBy,
+      ...params,
     };
     dispatch(Redux.thunks.marking.loadList(date));
   };
 
-  switch (inited) {
+  switch (status) {
     case 'initial':
     case 'pending':
       // loading icon
