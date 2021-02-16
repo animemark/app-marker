@@ -109,22 +109,9 @@
 
 
 .marking-item {
+  overflow: hidden;
   img.avatar {
     width: 40px;
     height: 40px;
   }
-  .marking-subs {
-    padding-left: 40px;
-  }
-}
-
-.marking-badges {
-  .btn {
-    padding: 1px 5px;
-    font-size: 0.75rem;
-  }
-}
-
-.marking-indent {
-  padding-left: 40px;
 }

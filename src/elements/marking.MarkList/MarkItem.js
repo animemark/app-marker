@@ -60,8 +60,10 @@ function MarkItem(props) {
         </div>
       </div>
 
-      <div className="mt-2" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(markDoc._comment_in_html) }}></div>
-      
+      <div className="mt-2">
+        <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(markDoc._comment_in_html) }}></div>
+      </div>
+
       <div className="mt-2 d-flex justify-content-between align-items-center small text-muted">
         <TimeAgo time={markDoc.dateCreate} css="d-inline small text-muted" />
         <LikeAndHate markOid={markOid} />

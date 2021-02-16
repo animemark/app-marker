@@ -130,7 +130,9 @@ function PostItem(props) {
         </div>
       </div>
       <BadgesDom />
-      <div className="mt-2" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
+      <div className="mt-2">
+        <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
+      </div>
       <div className="mt-2 d-flex align-items-center small text-muted">
         <LikeAndHate postOid={postOid} />
         <ReplyBtnDom />
