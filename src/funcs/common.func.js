@@ -20,13 +20,21 @@ const info_from_pageKey = function (pageKey) {
   const _pks = _confs.common.pageKeys;
   const key = String(pageKey).trim();
   const st4 = key.substr(0, 4);
+  Object.assign(info, {
+    keyType: st4,
+    pageKey: key,
+  });
   switch (st4) {
     case _pks.btoto_subject:
       Object.assign(info, {
         appName: _confs.common.appNames.btoto,
         docKind: _confs.common.kinds.comic.file,
-        keyType: st4,
-        pageKey: key,
+      });
+      break;
+    case _pks.mpark_subject:
+      Object.assign(info, {
+        appName: _confs.common.appNames.mpark,
+        docKind: _confs.common.kinds.comic.file,
       });
       break;
     default:
