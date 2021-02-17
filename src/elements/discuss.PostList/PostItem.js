@@ -113,6 +113,7 @@ function PostItem(props) {
 
   return (
     <div className="discuss-item lv1">
+      
       <div className="d-flex justify-content-start align-items-center discuss-head">
         <a href={poerDoc._https_btoto} target="_blank" rel="noreferrer">
           <img className="avatar" src={poerDoc._https_avatar} alt="" />
@@ -129,14 +130,18 @@ function PostItem(props) {
           <i className="d-none fas fa-ellipsis-v text-muted"></i>
         </div>
       </div>
+
       <BadgesDom />
+
       <div className="mt-2">
         <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
       </div>
+
       <div className="mt-2 d-flex align-items-center small text-muted">
         <LikeAndHate postOid={postOid} />
         <ReplyBtnDom />
       </div>
+
       { isFormInited &&
         <div className={`mt-2 discuss-indent ${isFormShowing ? '' : 'd-none'}`}>
           <PostForm postTo={postTo} />
@@ -147,6 +152,7 @@ function PostItem(props) {
           <PostList listAt={listAt} />
         </div>
       }
+      
     </div>
   );
 }

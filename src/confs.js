@@ -70,7 +70,7 @@ const confs = {
       return {
         errorNo: 0,
         posting: false,
-        martus: 'wish',
+        martus: 'doing',
         score: 0,
         comment: '',
       };

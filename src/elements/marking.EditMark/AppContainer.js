@@ -9,23 +9,28 @@ import Mainer from "./Mainer";
 function Rooter() {
 
   const dispatch = useDispatch();
-  const { inited, pageKey } = useSelector(state => state.marking);
+  const { params, status, pageKey} = useSelector(state => state.marking);
 
   useEffect(() => {
     window.resizeFrameHeight();
   });
-  
-  useEffect(() => {
-    if (pageKey === false) {
-      const pars = window.get_url_params();
-      const pval = pars.pageKey || '';
-      dispatch(Redux.actions.marking.set_pageKey(pval));
-    }
-  });
 
   useEffect(() => {
-    if (pageKey) {
-      if (inited === 'initial') {
+    if (params === false) {
+      const params = window.get_url_params();
+      if(!params.pageKey){
+        // we can't go next if without payKey
+        dispatch(Redux.actions.marking.set_params(null));
+        return;
+      }
+      dispatch(Redux.actions.marking.set_pageKey(params.pageKey));
+      dispatch(Redux.actions.marking.set_params(params));
+    }
+  });
+  
+  useEffect(() => {
+    if (params) {
+      if (status === 'initial') {
         firstLoad();
       }
     }
@@ -38,7 +43,7 @@ function Rooter() {
     dispatch(Redux.thunks.marking.myMark(date));
   };
 
-  switch (inited) {
+  switch (status) {
     case 'initial':
     case 'pending':
       // loading icon
