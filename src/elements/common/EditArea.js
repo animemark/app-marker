@@ -4,17 +4,12 @@ import Redux from "../../redux";
 import Confs from "../../confs";
 
 function EditArea(props) {
-  const { domId, innerText, onChange, css } = props;
-
-  const [inited, set_inited] = useState(0);
+  const { domId, innerText, onChange, css = '' } = props;
 
   useEffect(() => {
-    // set innerText only one time
-    if (!inited) {
-      document.getElementById(domId).innerText = innerText;
-      set_inited(1);
-    }
-  }, [inited, innerText]);
+    console.log('EditArea useEffect:', domId);
+    document.getElementById(domId).innerText = innerText;
+  }, []);
 
   const handleKeyEvent = (event) => {
     const innerText = event?.target?.innerText ? String(event.target.innerText).trim() : '';

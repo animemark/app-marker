@@ -1,18 +1,23 @@
 const multipleEntry = require('react-app-rewire-multiple-entry')([
   {
-    entry: 'src/entry/discuss.PostList.js',
+    outPath: '/discuss/post-list.html',
+    entry: 'src/entry/discuss.post-list.js',
     template: 'src/entry/template.html',
-    outPath: '/discuss/PostList.html'
   },
   {
-    entry: 'src/entry/marking.EditMark.js',
+    outPath: '/marking/edit-mark.html',
+    entry: 'src/entry/marking.edit-mark.js',
     template: 'src/entry/template.html',
-    outPath: '/marking/EditMark.html'
   },
   {
-    entry: 'src/entry/marking.MarkList.js',
+    outPath: '/marking/mark-list.html',
+    entry: 'src/entry/marking.mark-list.js',
     template: 'src/entry/template.html',
-    outPath: '/marking/MarkList.html'
+  },
+  {
+    outPath: '/profile/default.html',
+    entry: 'src/entry/profile.default.js',
+    template: 'src/entry/template.html',
   },
 ]);
 

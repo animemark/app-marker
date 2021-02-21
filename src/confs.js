@@ -31,11 +31,10 @@ const confs = {
     default_postLis_unit() {
       return {
         loadStatus: 'initial',
+        postAdds: [],// newly added postOids
         postOids: [],
         prevOid: null,
         prevPos: null,
-        isLast: null,
-        newPosts: 0,
       }
     },
     default_formKvs_unit() {
@@ -55,14 +54,13 @@ const confs = {
       old: 'Oldest',
     },
     sortByDefault: 'hot',
-    
+
     default_markLis() {
       return {
         loadStatus: 'initial',
         markOids: [],
         prevOid: null,
         prevPos: null,
-        isLast: null,
       };
     },
 
@@ -75,6 +73,24 @@ const confs = {
         comment: '',
       };
     },
+  },
+
+  profile: {
+    menus: {
+      marks: {
+        file: 'marks',
+        text: 'Marks',
+      },
+      posts: {
+        file: 'posts',
+        text: 'Posts',
+      },
+      files: {
+        file: 'files',
+        text: 'Files',
+      },
+    },
+    menu_default: 'marks',
   },
 };
 

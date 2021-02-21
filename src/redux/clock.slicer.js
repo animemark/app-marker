@@ -1,7 +1,8 @@
 
 import { createSlice } from '@reduxjs/toolkit';
-import { loadList as discuss_loadList } from './discuss.thunks';
-import { myMark as marking_myMark, loadList as marking_loadList } from './marking.thunks';
+import DiscussThunks from './discuss.thunks';
+import MarkingThunks from './marking.thunks';
+import ProfileThunks from './profile.thunks';
 
 const handle_server_data = (state, action) => {
   //if (state.inited) return;
@@ -28,8 +29,12 @@ export default createSlice({
     },
   },
   extraReducers: {
-    [discuss_loadList.fulfilled]: handle_server_data,
-    [marking_myMark.fulfilled]: handle_server_data,
-    [marking_loadList.fulfilled]: handle_server_data,
+    [DiscussThunks.loadList.fulfilled]: handle_server_data,
+
+    [MarkingThunks.myMark.fulfilled]: handle_server_data,
+    [MarkingThunks.loadList.fulfilled]: handle_server_data,
+    
+    [ProfileThunks.LoadMarkList.fulfilled]: handle_server_data,
+    [ProfileThunks.LoadPostList.fulfilled]: handle_server_data,
   },
 });

@@ -11,15 +11,22 @@
   <meta name="description" content="AnimeMark Community" />
   <!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> -->
   <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
-  <title>AnimeMark Community!</title>
-  <link type="text/css" rel="stylesheet" href="%PUBLIC_URL%/emojis/_base.css" />
-  <link type="text/css" rel="stylesheet" href="%PUBLIC_URL%/emojis/browser.css" />
-  <link type="text/css" rel="stylesheet" href="%PUBLIC_URL%/emojis/twtr.css" media="print" onload="this.media='all'" />
+  <link href="https://static.animemark.com/eflag/base.css" type="text/css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://static.animemark.com/eflag/twtr.css" type="text/css" rel="stylesheet" media="print"
+    onload="this.media='all'" crossorigin="anonymous" />
   <link type="text/css" rel="stylesheet"
     href="https://static.animemark.com/3rds/fontawesome-free-5.9.0-web/css/all.min.css" media="print"
     onload="this.media='all'" crossorigin="anonymous" />
+  <title>AnimeMark Community!</title>
   <script>
-    document.domain = "bato.to";
+    document.domain = String(document.domain).split('.').reverse().slice(0, 2).reverse().join('.');
+    (function () {
+      const o_node = document.getElementsByTagName("head")[0];
+      const o_base = document.createElement("base");
+      o_base.id = "document-base";
+      o_base.target = '_top';
+      o_node.append(o_base);
+    })();
   </script>
 </head>
 
@@ -38,18 +45,7 @@
         o_root.offsetHeight || 0
       );
       const o_url = new URL(window.location.href);
-      let fid = "";
-      switch (o_url.pathname) {
-        case "/discuss/PostList.html":
-          fid = "app.discuss.PostList";
-          break;
-        case "/marking/EditMark.html":
-          fid = "app.marking.EditMark";
-          break;
-        case "/marking/MarkList.html":
-          fid = "app.marking.MarkList";
-          break;
-      }
+      const fid = 'app-marker' + String(o_url.pathname).toLowerCase();
       window.parent.set_marker_app_iframe_height(fid, val);
     }
     function getSelectionParentElement() {
@@ -123,7 +119,9 @@
       }
     })();
   </script>
-  <script src="https://app-marker.bato.to/api/common/ssconfs.js" crossOrigin="anonymous"></script>
+  <script>
+    document.writeln(`\<script src="https://app-marker.${document.domain}/api/common/ssconfs.js" crossOrigin="anonymous"\>\<\/script\>`);
+  </script>
 </body>
 
 </html>

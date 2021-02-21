@@ -31,7 +31,7 @@ export default createSlice({
     // MarkList
     pageKeys: false,
     sortBy: Confs.marking.sortByDefault,
-    badges: false,
+
     markKvs: {},
     markLis: Confs.marking.default_markLis(),
     pageDoc: false,
@@ -81,9 +81,6 @@ export default createSlice({
     },
 
     // mark list
-    set_badges(state, action) {
-      state.badges = action.payload;
-    },
     set_sortBy(state, action) {
       const sortBy = action.payload;
       state.sortBy = sortBy;

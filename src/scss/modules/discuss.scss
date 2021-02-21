@@ -15,15 +15,28 @@
     height: 40px;
   }
   .discuss-subs {
+    position: relative;
     padding-left: 40px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      border-left: 1px solid darken($color: $body-bg, $amount: 5%);
+    }
+    &:hover {
+      &::before {
+        border-left: 3px solid darken($color: $body-bg, $amount: 15%);
+      }
+    }
   }
 }
 
-.discuss-badges{
-  .btn{
-    padding: 1px 5px;
-    font-size: .75rem;
-  }
+.discuss-node {
+  background-color: darken($color: $body-bg, $amount: 5%);
 }
 
 .discuss-indent {

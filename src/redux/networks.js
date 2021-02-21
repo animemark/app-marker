@@ -1,5 +1,32 @@
-const api_end_point = `https://app-marker.bato.to`;
+const api_end_point = `https://app-marker.${document.domain}`;
 
+/**
+ * One for All
+ * @param {*} path /api/marking/myMark /api/discuss/LoadList
+ * @param {*} data data to post
+ * @param {*} opts 
+ */
+export async function app_marker_api(path, data = null, {
+  method = 'POST',
+  mode = 'cors',
+  credentials = 'include',
+  headers = {
+    "Content-Type": "application/json",
+  },
+} = {}) {
+  const url = `${api_end_point}${path}`;
+  return fetch(url, {
+    method,
+    mode,
+    credentials,
+    headers,
+    body: data ? JSON.stringify(data) : null,
+  });
+}
+
+// ================
+// #TODO: the rest funcs can be changed to app_marker_api
+// ================
 
 // ================
 // marking
@@ -99,7 +126,10 @@ export async function discuss_votePost(data) {
   });
 }
 
+
 const networks = {
+  app_marker_api,
+
   marking_myMark,
   marking_loadList,
   marking_upsertMark,

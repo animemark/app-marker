@@ -1,16 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadList, createPost } from './discuss.thunks';
+import DiscussThunks from './discuss.thunks';
+import Funcs from '../funcs';
 import Confs from '../confs';
+
+function reset_root_list(state) {
+  state.postLis = {
+    [state.params.listOf]: Confs.discuss.default_postLis_unit(),
+  };
+  state.formKvs = {
+    [state.params.postTo]: Confs.discuss.default_formKvs_unit(),
+  };
+}
 export default createSlice({
   name: 'discuss',
   initialState: {
-    inited: 'initial', // pending, success, failure; first ajax load status
 
-    listAt: false, // what to be list
-    postTo: false, // post to where
+    params: false,
+    status: 'initial',
+
     sortBy: false,
-    badges: false, // badges info
+
+    nodeOid: null,
     pageDoc: null,
+    pageKvs: {},
     relaKvs: {},
     postKvs: {},// post key(postOid) => value(postDoc), storage all post doc
     postLis: {},// post list parentOid => [postOid list], storage info of all post list
@@ -18,28 +30,19 @@ export default createSlice({
     formKvs: {},
   },
   reducers: {
-    // common
-    set_listAt(state, action) {
-      const listAt = action.payload;
-      // must init the top level postLis here
-      state.postLis = {
-        [listAt]: Confs.discuss.default_postLis_unit(),
-      };
-      state.listAt = listAt;
+    set_status(state, action) {
+      state.status = action.payload;
     },
-    set_postTo(state, action) {
-      state.postTo = action.payload;
-    },
-    set_badges(state, action) {
-      state.badges = action.payload;
+    set_params(state, action) {
+      state.params = action.payload;
     },
     set_sortBy(state, action) {
-      const sortBy = action.payload;
-      state.sortBy = sortBy;
-      window.localStorage.setItem(Confs.localStorageKeys.discuss_sortBy, sortBy);
+      state.sortBy = action.payload;
       state.postLis = {
-        [state.listAt]: Confs.discuss.default_postLis_unit(),
+        [state.params.listOf]: Confs.discuss.default_postLis_unit(),
       };
+      //reset_root_list(state);
+      //window.localStorage.setItem(Confs.localStorageKeys.discuss_sortBy, sortBy);
     },
 
     // post item
@@ -65,17 +68,17 @@ export default createSlice({
 
     // post list
     addTo_postLis(state, action) {
-      const { listAt, postOid } = action.payload;
-      if (typeof state.postLis[listAt] === 'undefined') {
-        state.postLis[listAt] = Confs.discuss.default_postLis_unit();
+      const { listOf, postOid } = action.payload;
+      if (typeof state.postLis[listOf] === 'undefined') {
+        state.postLis[listOf] = Confs.discuss.default_postLis_unit();
       }
-      if (postOid && state.postLis[listAt].postOids.includes(postOid) === false) {
-        state.postLis[listAt].postOids.unshift(postOid);
+      if (postOid && state.postLis[listOf].postOids.includes(postOid) === false) {
+        state.postLis[listOf].postOids.unshift(postOid);
       }
     },
     reset_postLis(state, action) {
       state.postLis = {
-        [state.listAt]: Confs.discuss.default_postLis_unit(),
+        [state.params.listOf]: Confs.discuss.default_postLis_unit(),
       };
     },
 
@@ -118,33 +121,37 @@ export default createSlice({
   },
   extraReducers: {
     // loadList
-    [loadList.pending]: (state, action) => {
-      const { listAt, sortBy } = action.meta.arg;
+    [DiscussThunks.loadList.pending]: (state, action) => {
+      const { listOf, sortBy } = action.meta.arg;
       if (sortBy !== state.sortBy) {
         return;
       }
-      if (typeof state.postLis[listAt] === 'undefined') {
-        state.postLis[listAt] = Confs.discuss.default_postLis_unit();
-      }
-      state.postLis[listAt].loadStatus = 'pending';
 
-      if (['initial', 'failure'].includes(state.inited)) {
-        state.inited = 'pending';
+      console.log('action.meta.arg:', action.meta.arg);
+      if (typeof state.postLis[listOf] === 'undefined') {
+        state.postLis[listOf] = Confs.discuss.default_postLis_unit();
       }
+      state.postLis[listOf].loadStatus = 'pending';
+
+      Funcs.util.next_state_status(state, 'pending');
     },
-    [loadList.fulfilled]: (state, action) => {
-      const { listAt, sortBy } = action.meta.arg;
+    [DiscussThunks.loadList.fulfilled]: (state, action) => {
+      const { listOf, sortBy } = action.meta.arg;
+
       if (sortBy !== state.sortBy) {
         return;
       }
-      const { error, eno, res } = action.payload;
-      if (error || eno) {
-        state.postLis[listAt].loadStatus = 'failure';
+
+      const { eno, res } = action.payload;
+      if (eno) {
+        state.postLis[listOf].loadStatus = 'failure';
+        Funcs.util.next_state_status(state, 'failure');
         return;
       }
-      const { pageDoc, relaKvs, postLis, prevOid, prevPos, isLast, voteKvs } = res;
-      if (pageDoc) {
-        state.pageDoc = pageDoc;
+
+      const { pageKvs, relaKvs, voteKvs, poidLis, postKvs, prevOid, prevPos, isLast } = res;
+      if (pageKvs) {
+        Object.assign(state.pageKvs, pageKvs);
       }
       if (relaKvs) {
         Object.assign(state.relaKvs, relaKvs);
@@ -152,39 +159,37 @@ export default createSlice({
       if (voteKvs) {
         Object.assign(state.voteKvs, voteKvs);
       }
-      for (const row of postLis) {
-        state.postKvs[row._id] = row;
-        if (state.postLis[listAt].postOids.includes(row._id) === false) {
-          state.postLis[listAt].postOids.push(row._id);
+      if (postKvs) {
+        Object.assign(state.postKvs, postKvs);
+      }
+      for (const poid of poidLis) {
+        if (state.postLis[listOf].postOids.includes(poid) === false) {
+          state.postLis[listOf].postOids.push(poid);
         }
       }
-      state.postLis[listAt].prevOid = prevOid;
-      state.postLis[listAt].prevPos = prevPos;
-      state.postLis[listAt].isLast = isLast;
-      state.postLis[listAt].loadStatus = isLast ? 'no_more' : 'success';
 
-      if (state.inited === 'pending') {
-        state.inited = 'success';
-      }
+      state.postLis[listOf].prevOid = prevOid;
+      state.postLis[listOf].prevPos = prevPos;
+      state.postLis[listOf].loadStatus = isLast ? 'no_more' : 'success';
+
+      Funcs.util.next_state_status(state, 'success');
     },
-    [loadList.rejected]: (state, action) => {
-      const { listAt, sortBy } = action.meta.arg;
+    [DiscussThunks.loadList.rejected]: (state, action) => {
+      const { listOf, sortBy } = action.meta.arg;
       if (sortBy !== state.sortBy) {
         return;
       }
-      state.postLis[listAt].loadStatus = 'failure';
 
-      if (state.inited === 'pending') {
-        state.inited = 'failure';
-      }
+      state.postLis[listOf].loadStatus = 'failure';
+      Funcs.util.next_state_status(state, 'failure');
     },
 
     // createPost
-    [createPost.pending]: (state, action) => {
+    [DiscussThunks.createPost.pending]: (state, action) => {
       const { postTo } = action.meta.arg;
       state.formKvs[postTo].posting = true;
     },
-    [createPost.fulfilled]: (state, action) => {
+    [DiscussThunks.createPost.fulfilled]: (state, action) => {
       const { postTo } = action.meta.arg;
       const { error, eno, res } = action.payload;
 
@@ -197,12 +202,16 @@ export default createSlice({
 
       state.postKvs[postOid] = postDoc;
 
-      const listAt = postDoc.replyTo || state.listAt;// is not postTo, postTo maybe no a key of postLis
-      if (typeof state.postLis[listAt] === 'undefined') {
-        state.postLis[listAt] = Confs.discuss.default_postLis_unit();
+      const listOf = postDoc.replyTo || state.params.listOf;// is not postTo, postTo maybe no a key of postLis
+      if (typeof state.postLis[listOf] === 'undefined') {
+        state.postLis[listOf] = Confs.discuss.default_postLis_unit();
       }
-      if (postOid && state.postLis[listAt].postOids.includes(postOid) === false) {
-        state.postLis[listAt].postOids.unshift(postOid);
+
+      // if (postOid && state.postLis[listOf].postAdds.includes(postOid) === false) {
+      //   state.postLis[listOf].postAdds.unshift(postOid);
+      // }
+      if (postOid && state.postLis[listOf].postOids.includes(postOid) === false) {
+        state.postLis[listOf].postOids.unshift(postOid);
       }
 
       // all ancestors node countReply +1
@@ -235,7 +244,7 @@ export default createSlice({
 
       state.formKvs[postTo] = null; // null the form after success submit
     },
-    [createPost.rejected]: (state, action) => {
+    [DiscussThunks.createPost.rejected]: (state, action) => {
       const { postTo } = action.meta.arg;
       state.formKvs[postTo].errorNo = Confs.eno.unknownError;
       state.formKvs[postTo].posting = false;

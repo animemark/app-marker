@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AASA,AAAA,IAAI,AAAC,CACH,KAAK,CALM,IAAI,CAMhB,AACD,AAAA,CAAC,AAAC,CACA,KAAK,CAAE,OAAyB,CACjC,AACD,AAAA,CAAC,AAAA,MAAM,AAAC,CACN,KAAK,CATY,OAAyB,CAU3C",
-    "sources": [
-        "../../src/scss/theme-dark.scss"
-    ],
-    "names": [],
-    "file": "theme-dark.min.css"
-}

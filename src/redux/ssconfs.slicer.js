@@ -1,4 +1,9 @@
 
+/**
+ * @deprecated
+ * use window._ssconfs
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import { loadList as discuss_loadList } from './discuss.thunks';
 import { myMark as marking_myMark, loadList as marking_loadList } from './marking.thunks';

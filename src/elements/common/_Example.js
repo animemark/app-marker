@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Redux from "../../redux";
 import Confs from "../../confs";
+import Funcs from "../../funcs";
 
 function _Example() {
 
-  const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+  const { userIid } = useSelector(state => state.users);
+  const [error, set_error] = useState(null);
 
   useEffect(() => {
-    document.title = `You clicked ${count} times`;
+    window.resizeFrameHeight();
   });
 
   return (
     <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
+      <p>Hello user: {userIid}</p>
     </div>
   );
 }

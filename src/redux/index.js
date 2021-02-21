@@ -8,12 +8,15 @@ import discussSlicer from './discuss.slicer';
 import markingThunks from './marking.thunks';
 import markingSlicer from './marking.slicer';
 
+import profileThunks from './profile.thunks';
+import profileSlicer from './profile.slicer';
 
 import networks from './networks';
 
 export const thunks = {
   discuss: discussThunks,
   marking: markingThunks,
+  profile: profileThunks,
 }
 
 export const slicers = {
@@ -22,6 +25,7 @@ export const slicers = {
   ssconfs: ssconfsSlicer,
   discuss: discussSlicer,
   marking: markingSlicer,
+  profile: profileSlicer,
 };
 
 export const actions = {
@@ -30,6 +34,7 @@ export const actions = {
   ssconfs: ssconfsSlicer.actions,
   discuss: discussSlicer.actions,
   marking: markingSlicer.actions,
+  profile: profileSlicer.actions,
 };
 
 export const reducers = {
@@ -38,6 +43,7 @@ export const reducers = {
   ssconfs: ssconfsSlicer.reducer,
   discuss: discussSlicer.reducer,
   marking: markingSlicer.reducer,
+  profile: profileSlicer.reducer,
 }
 
 const Redux = {
