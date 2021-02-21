@@ -88,7 +88,7 @@ const confs = {
       files: {
         file: 'files',
         text: 'Files',
-        disabled: true,
+        //disabled: true,
       },
     },
     menu_default: 'marks',

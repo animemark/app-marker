@@ -17,6 +17,9 @@ $link-hover-color: darken($link-color, 10%);
 
 $enable-rounded: false;
 
+$input-btn-focus-box-shadow: none;
+$input-btn-focus-width: 0;
+
 $grid-columns: 24;
 $grid-row-columns: 8;
 $grid-breakpoints: (

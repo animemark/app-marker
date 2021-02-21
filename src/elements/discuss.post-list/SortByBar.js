@@ -26,7 +26,7 @@ function SortByBar() {
   };
 
   const onClick_sortBy = (type) => {
-    window.localStorage.setItem(Confs.localStorageKeys.discuss_sortBy, sortBy);
+    window.localStorage.setItem(Confs.localStorageKeys.discuss_sortBy, type);
     dispatch(Redux.actions.discuss.set_sortBy(type));
   };
 
