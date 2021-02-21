@@ -43,12 +43,12 @@ function Rooter() {
     params.maxDepth = Math.max(1, params.maxDepth);
 
     params._badges = [];
-    if(params.badges){
+    if (params.badges) {
       params._badges = String(params.badges).split(',').map(v => v.trim()).filter(v => v);
     }
 
     params._showRelaKeys = [];
-    if(params.showRelaKeys){
+    if (params.showRelaKeys) {
       params._showRelaKeys = String(params.showRelaKeys).split(',').map(v => v.trim()).filter(v => v);
     }
 
@@ -59,30 +59,6 @@ function Rooter() {
 
     dispatch(Redux.actions.discuss.set_params(params));
   }, []);// one-time useEffect
-
-  // useEffect(() => {
-  //   if (listOf === false) {
-  //     const pars = window.get_url_params();
-  //     const pval = pars.list || pars.listOf || '';
-  //     dispatch(Redux.actions.discuss.set_listOf(pval));
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   if (postTo === false) {
-  //     const pars = window.get_url_params();
-  //     const pval = pars.post || pars.postTo || pars.list || pars.listOf || '';
-  //     dispatch(Redux.actions.discuss.set_postTo(pval));
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   if (sortBy === false) {
-  //     let type = window.localStorage.getItem(Confs.localStorageKeys.discuss_sortBy);
-  //     type = Confs.discuss.sortTypes[type] ? type : Confs.discuss.sortByDefault;
-  //     dispatch(Redux.actions.discuss.set_sortBy(type));
-  //   }
-  // });
 
   useEffect(() => {
     if (!error) {

@@ -15,14 +15,14 @@ function RelaInfo(props) {
 
   const dispatch = useDispatch();
   const { params, relaKvs } = useSelector(state => state.discuss);
-  const { _showRelaKeys } = params;
+  const { showAllRela, _showRelaKeys } = params;
 
   useEffect(() => {
     window.resizeFrameHeight();
   });
 
 
-  if (!_showRelaKeys.length) {
+  if (!_showRelaKeys.length && !showAllRela) {
     return null;
   }
   if (!pageKeys?.length) {
@@ -43,13 +43,24 @@ function RelaInfo(props) {
    */
   const rela_keyType_to_pageKey = {};
 
-  _showRelaKeys.forEach(v => rela_keyType_to_pageKey[v] = null);
+  // keep the order as gaven
+  if (_showRelaKeys.length) {
+    _showRelaKeys.forEach(v => rela_keyType_to_pageKey[v] = null);
+  }
 
   for (const pageKey of pageKeys) {
-    const badge = String(pageKey).substr(0, 4);
-    if (rela_keyType_to_pageKey[badge] !== null) continue;
+    const keyType = String(pageKey).substr(0, 4);
+
+    if (showAllRela) {
+      // add every rela page
+    } else {
+      if (rela_keyType_to_pageKey[keyType] !== null) {
+        continue;
+      }
+    }
+
     if (!relaKvs[pageKey]) continue;
-    rela_keyType_to_pageKey[badge] = pageKey;
+    rela_keyType_to_pageKey[keyType] = pageKey;
   }
 
   const DomLis = [];
