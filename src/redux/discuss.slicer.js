@@ -127,7 +127,6 @@ export default createSlice({
         return;
       }
 
-      console.log('action.meta.arg:', action.meta.arg);
       if (typeof state.postLis[listOf] === 'undefined') {
         state.postLis[listOf] = Confs.discuss.default_postLis_unit();
       }
