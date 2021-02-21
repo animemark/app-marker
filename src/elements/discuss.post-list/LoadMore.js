@@ -133,7 +133,7 @@ function LoadMore(props) {
       }
       if (BtnDom) {
         return (
-          <div className="mt-3 d-flex justify-content-start align-items-end load-more">
+          <div className="pt-3 d-flex justify-content-start align-items-end load-more">
             {BtnDom}
           </div>
         );

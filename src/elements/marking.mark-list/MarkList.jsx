@@ -86,17 +86,19 @@ function MarkList(props) {
   ));
 
   return (
-    <div className="d-grid gap-3 marking-list">
-      {Boolean(params.showSortByBar) &&
-        <SortByBar />
-      }
-      {itemList_to_DomList}
-      { loadStatus === 'failure' &&
-        <div className="alert alert-danger">
-          An exception was encountered while loading the list.
+    <div className="marking-list">
+      <div className="d-grid gap-3">
+        {Boolean(params.showSortByBar) &&
+          <SortByBar />
+        }
+        {itemList_to_DomList}
+        {loadStatus === 'failure' &&
+          <div className="alert alert-danger">
+            An exception was encountered while loading the list.
         </div>
-      }
-      <LoadMoreDom />
+        }
+        <LoadMoreDom />
+      </div>
     </div>
   );
 }

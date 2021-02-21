@@ -44,7 +44,7 @@ function SortByBar() {
   };
 
   return (
-    <div className="mt-3 d-flex justify-content-between align-items-center">
+    <div className="py-3 d-flex justify-content-between align-items-center">
       <PageInfoDom />
       <div>
         <SortBtnDom type="hot" />
