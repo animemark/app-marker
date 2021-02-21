@@ -18,7 +18,6 @@ function PostItem(props) {
   const dispatch = useDispatch();
   const { userIid, userKvs } = useSelector(state => state.users);
   const { params, relaKvs, postKvs } = useSelector(state => state.discuss);
-  const { _badges } = params;
 
   const formVal = useSelector(state => state.discuss.formKvs[postTo]);
   const isFormInited = formVal ? true : false;
@@ -29,8 +28,8 @@ function PostItem(props) {
 
   const reachMaxDepth = level >= params.maxDepth ? true : false;
 
-  const poerIid = postDoc?.userIid;
-  const poerDoc = userKvs?.[poerIid];
+  const mkerIid = postDoc?.userIid;
+  const mkerDoc = userKvs?.[mkerIid];
 
   useEffect(() => {
     window.resizeFrameHeight();
@@ -59,69 +58,17 @@ function PostItem(props) {
     )
   }
 
-  const BadgesDom = () => {
-    if (postDepth > 1) {
-      return null;
-    }
-    if (!_badges.length) {
-      return null;
-    }
-    if (!postDoc?.pageKeys?.length) {
-      return null;
-    }
-
-    const myBadges = {};
-    _badges.forEach(v => myBadges[v] = null);
-
-    for (const pageKey of postDoc.pageKeys) {
-      const badge = String(pageKey).substr(0, 4);
-      if (myBadges[badge] !== null) continue;
-      if (!relaKvs[pageKey]) continue;
-      myBadges[badge] = pageKey;
-    }
-
-    const DomArr = [];
-    for (const [badge, pageKey] of Object.entries(myBadges)) {
-      if (!pageKey) continue;
-      const relaDoc = relaKvs[pageKey];
-      switch (badge) {
-        case 'btsu':
-          DomArr.push(
-            <a key={pageKey} className="btn btn-sm btn-outline-info" href={relaDoc._https_btoto} target="_blank" rel="noreferrer">{relaDoc.info.title}</a>
-          );
-          break;
-        case 'btep':
-          DomArr.push(
-            <a key={pageKey} className="btn btn-sm btn-outline-info" href={relaDoc._https_btoto} target="_blank" rel="noreferrer">{relaDoc._short}</a>
-          );
-          break;
-        default:
-          break;
-      }
-    }
-
-    if (!DomArr.length) {
-      return null;
-    }
-
-    return (
-      <div className="mt-2 discuss-badges">
-        {DomArr}
-      </div>
-    );
-  };
-
   return (
     <div data-post-oid={postOid} className="discuss-item">
 
       <div className="d-flex justify-content-start align-items-center discuss-head">
-        <a href={poerDoc._https_btoto} target="_blank" rel="noreferrer">
-          <img className="avatar" src={poerDoc._https_avatar} alt="" />
+        <a href={Funcs.util.href_add_base(mkerDoc._upath_marker)} target="_blank" rel="noreferrer">
+          <img className="avatar" src={mkerDoc._https_avatar} alt="" />
         </a>
         <div className="ms-2">
           <div>
-            <a href={poerDoc._https_btoto} target="_blank" rel='noreferrer'>
-              {poerDoc.info.name}
+            <a href={Funcs.util.href_add_base(mkerDoc._upath_marker)} target="_blank" rel='noreferrer'>
+              {mkerDoc.info.name}
             </a>
           </div>
           <TimeAgo time={postDoc.dateCreate} css="d-inline small text-muted" />

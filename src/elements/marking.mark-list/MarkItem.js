@@ -39,12 +39,12 @@ function MarkItem(props) {
       <RelaTitle markOid={markOid} />
 
       <div className="mt-2 d-flex justify-content-start align-items-center marking-head">
-        <a href={mkerDoc._https_btoto} target="_blank" rel="noreferrer">
+        <a href={Funcs.util.href_add_base(mkerDoc._upath_marker)} target="_blank" rel="noreferrer">
           <img className="avatar" src={mkerDoc._https_avatar} alt="" />
         </a>
         <div className="ms-2">
           <div>
-            <a href={mkerDoc._https_btoto} target="_blank" rel='noreferrer'>
+            <a href={Funcs.util.href_add_base(mkerDoc._upath_marker)} target="_blank" rel='noreferrer'>
               {mkerDoc.info.name}
             </a>
           </div>

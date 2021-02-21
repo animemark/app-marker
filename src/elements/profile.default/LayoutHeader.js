@@ -24,7 +24,7 @@ function LayoutHeader() {
   const MainMenuDomLis = [];
   for (const [file, item] of Object.entries(Confs.profile.menus)) {
     MainMenuDomLis.push((
-      <a key={file} className={`nav-link ${file === params.menu ? 'active' : ''}`} href={Funcs.util.href_add_base(`/marker/${mkerUni}/${file}`)}>{item.text}</a>
+      <a key={file} className={`nav-link ${file === params.menu ? 'active' : ''} ${item.disabled ? 'd-none' : ''}`} href={Funcs.util.href_add_base(`/marker/${mkerUni}/${file}`)}>{item.text}</a>
     ));
   }
 
@@ -60,6 +60,7 @@ function LayoutHeader() {
       break;
   }
 
+  const _biography_in_html = mkerDoc?._userDetailDoc?._biography_in_html;
   return (
     <header className="header">
       <div className="pt-5">
@@ -70,10 +71,12 @@ function LayoutHeader() {
         <span>UserID: #{mkerIid}</span>
         <span>Joined: {moment(mkerDoc.base.dateCreate).format('YYYY-MM-DD')}</span>
       </div>
-      <div className="mt-4 overflow-hidden">
-        <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(mkerDoc._userDetailDoc._biography_in_html) }}>
+      {_biography_in_html ? true : false &&
+        <div className="mt-4 overflow-hidden">
+          <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(_biography_in_html) }}>
+          </div>
         </div>
-      </div>
+      }
       <nav className="mt-5 nav justify-content-center main">
         {MainMenuDomLis}
       </nav>
