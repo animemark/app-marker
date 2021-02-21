@@ -63,8 +63,6 @@ function LayoutHeader() {
   const _biography_in_html = mkerDoc?._userDetailDoc?._biography_in_html;
   return (
     <header className="header">
-      <div className="pt-5">
-      </div>
       <div className="d-flex flex-column align-items-center">
         <img className="shadow-2 avatar-1000" src={mkerDoc._https_avatar} alt="avatar" />
         <h3 className="mt-3">{mkerDoc.info.name}</h3>
