@@ -61,6 +61,7 @@ function LayoutHeader() {
   }
 
   const _biography_in_html = mkerDoc?._userDetailDoc?._biography_in_html;
+
   return (
     <header className="header">
       <div className="d-flex flex-column align-items-center">
@@ -69,10 +70,9 @@ function LayoutHeader() {
         <span>UserID: #{mkerIid}</span>
         <span>Joined: {moment(mkerDoc.base.dateCreate).format('YYYY-MM-DD')}</span>
       </div>
-      {_biography_in_html ? true : false &&
+      {Boolean(_biography_in_html) &&
         <div className="mt-4 overflow-hidden">
-          <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(_biography_in_html) }}>
-          </div>
+          <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(_biography_in_html) }}></div>
         </div>
       }
       <nav className="mt-5 nav justify-content-center main">
