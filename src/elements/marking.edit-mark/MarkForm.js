@@ -9,6 +9,8 @@ import EditToolBar from "../common/EditToolBar";
 
 const _confs = window._ssconfs;
 
+const login_url = `https://id.${document.domain}/login`;
+
 function MarkForm(props) {
 
   const editAreaDomId = `editArea_mark`;

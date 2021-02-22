@@ -6,6 +6,8 @@ import Confs from "../../confs";
 import EditArea from "../common/EditArea";
 import EditToolBar from "../common/EditToolBar";
 
+const login_url = `https://id.${document.domain}/login`;
+
 function PostForm(props) {
   const { postTo, listOf, isRoot = false } = props;
 
@@ -74,9 +76,9 @@ function PostForm(props) {
       );
     }
     return (
-      <button className="ms-auto btn btn-sm btn-secondary submit" disabled>
+      <a href={login_url} className="ms-auto btn btn-sm btn-secondary">
         Login First
-      </button>
+      </a>
     );
   };
 
