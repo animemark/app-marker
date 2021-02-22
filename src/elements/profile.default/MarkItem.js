@@ -48,15 +48,17 @@ function MarkItem(props) {
   const { docKind } = markDoc;
   const _confs_martus = _confs.marking.martus[docKind];
 
+  const relaInfo = Funcs.util.get_formated_rela_infos(relaDoc);
+
   return (
     <div className="d-flex marking-item">
 
-      <a href={relaDoc._https_btoto} target="_blank" rel="noreferrer">
-        <img src={Funcs.util.cover_width(relaDoc._https_cover)} alt="" width="60" height="80" />
+      <a href={relaInfo.https} target="_blank" rel="noreferrer">
+        <img src={Funcs.util.cover_width(relaInfo.cover)} alt="" width="60" height="80" />
       </a>
       <div className="ps-3 overflow-hidden">
-        <a className="fw-bold" href={relaDoc._https_btoto} target="_blank" rel="noreferrer">
-          {relaDoc.info.title}
+        <a className="fw-bold" href={relaInfo.https} target="_blank" rel="noreferrer">
+          {relaInfo.title}
         </a>
         <div className="d-flex flex-wrap align-items-center">
           <span className="me-2">{_confs_martus[markDoc.martus].text}</span>

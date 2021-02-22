@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Redux from "../../redux";
 import Confs from "../../confs";
+import Funcs from "../../funcs";
 
 function RelaTitle(props) {
 
@@ -19,10 +20,12 @@ function RelaTitle(props) {
     return null;
   }
 
+  const relaInfo = Funcs.util.get_formated_rela_infos(relaDoc);
+
   return (
-    <a className="btn btn-sm btn-dark" href={relaDoc._https_btoto} target="_blank" rel="noreferrer">
+    <a className="btn btn-sm btn-dark" href={relaInfo.https} target="_blank" rel="noreferrer">
       <i className="fas fa-book"></i>
-      <span className="ms-2">{relaDoc.info.title}</span>
+      <span className="ms-2">{relaInfo.title}</span>
     </a>
   );
 }

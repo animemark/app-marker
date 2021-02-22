@@ -40,7 +40,7 @@ const confs = {
     default_formKvs_unit() {
       return {
         errorNo: 0,
-        showing: true,
+        showing: false,
         posting: false,
         message: '',
       }
@@ -88,7 +88,7 @@ const confs = {
       files: {
         file: 'files',
         text: 'Files',
-        //disabled: true,
+        disabled: true,
       },
     },
     menu_default: 'marks',

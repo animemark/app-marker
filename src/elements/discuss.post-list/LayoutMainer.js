@@ -14,22 +14,11 @@ function Mainer() {
   const { params } = useSelector(state => state.discuss);
   const { listOf, postTo } = params;
 
-  const formVal = useSelector(state => state.discuss.formKvs[postTo]);
-  const isFormInited = formVal ? true : false;
-
-  useEffect(() => {
-    if (!isFormInited) {
-      dispatch(Redux.actions.discuss.init_form(postTo));
-    }
-  }, []);
-
   return (
     <div className="Mainer">
       <div className="w-100">
         <NodeInfo />
-        {(isFormInited) &&
-          <PostForm postTo={postTo} />
-        }
+        <PostForm postTo={postTo} isRoot={true}/>
         <SortByBar />
         <PostList listOf={listOf} level={1} />
       </div>

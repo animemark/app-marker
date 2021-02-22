@@ -15,7 +15,7 @@ function LayoutHeader() {
   const { params, mkerIid } = useSelector(state => state.profile);
 
   const mkerDoc = userKvs[mkerIid];
-  const mkerUni = mkerDoc.info.uniq;
+  const mkerUni = mkerDoc?.info?.uniq;
 
   useEffect(() => {
     window.resizeFrameHeight();

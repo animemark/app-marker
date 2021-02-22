@@ -7,7 +7,7 @@ import EditArea from "../common/EditArea";
 import EditToolBar from "../common/EditToolBar";
 
 function PostForm(props) {
-  const { postTo } = props;
+  const { postTo, listOf, isRoot = false } = props;
 
   const editAreaDomId = `EditArea_${postTo}`;
 
@@ -17,8 +17,20 @@ function PostForm(props) {
 
   const formVal = useSelector((state) => state.discuss.formKvs[postTo]);
 
-  const { posting, message, errorNo } = formVal;
+  useEffect(() => {
+    if (!formVal) {
+      dispatch(Redux.actions.discuss.init_form(postTo));
+    }
+  });
+
+  if (!formVal) {
+    return [];
+  }
+
+  const { posting, message, errorNo, showing } = formVal;
   const has_msg = message.length ? true : false;
+
+  const isShowForm = isRoot || showing ? true : false;
 
   const onClick_submit = function () {
     if (!has_msg) {
@@ -115,7 +127,7 @@ function PostForm(props) {
   // }
 
   return (
-    <div className="discuss-form">
+    <div className={`${isRoot ? '' : 'mt-3'} discuss-form ${isShowForm ? '' : 'd-none'}`}>
       <div className="editor">
         <EditArea domId={editAreaDomId} innerText={message} onChange={onChange_EditArea} />
         <EditError />

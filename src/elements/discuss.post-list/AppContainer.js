@@ -52,7 +52,7 @@ function Rooter() {
       params._showRelaKeys = String(params.showRelaKeys).split(',').map(v => v.trim()).filter(v => v);
     }
 
-    const sortBy = params.sortBy || window.localStorage.getItem(Confs.localStorageKeys.discuss_sortBy);
+    const sortBy = params.sortBy || window.localStorage.getItem(Confs.localStorageKeys.discuss_sortBy) || Confs.discuss.sortByDefault;
     if (sortBy) {
       dispatch(Redux.actions.discuss.set_sortBy(sortBy));
     }

@@ -20,12 +20,9 @@ function PostItem(props) {
   const { params, relaKvs, postKvs } = useSelector(state => state.discuss);
 
   const formVal = useSelector(state => state.discuss.formKvs[postTo]);
-  const isFormInited = formVal ? true : false;
   const isFormShowing = formVal?.showing;
 
   const postDoc = postKvs?.[postOid];
-  const postDepth = postDoc?.depth;
-
   const reachMaxDepth = level >= params.maxDepth ? true : false;
 
   const mkerIid = postDoc?.userIid;
@@ -36,13 +33,8 @@ function PostItem(props) {
   });
 
   const toggle_showFormStatus = () => {
-    if (!isFormInited) {
-      dispatch(Redux.actions.discuss.init_form(postTo));
-      return;
-    }
-    dispatch(Redux.actions.discuss.set_form_showing({
-      postTo,
-      showing: !isFormShowing,
+    dispatch(Redux.actions.discuss.toggle_form_showing({
+      postTo
     }));
     return;
   };
@@ -56,6 +48,13 @@ function PostItem(props) {
         Reply
       </button>
     )
+  }
+
+  let continue_text = 'continue here';
+  if (postDoc.countReply === 1) {
+    continue_text = `${postDoc.countReply} reply ${continue_text}`
+  } else if (postDoc.countReply > 1) {
+    continue_text = `${postDoc.countReply} replies ${continue_text}`;
   }
 
   return (
@@ -89,17 +88,20 @@ function PostItem(props) {
         <ReplyBtnDom />
       </div>
 
-      { isFormInited &&
-        <div className={`mt-2 discuss-indent ${isFormShowing ? '' : 'd-none'}`}>
-          <PostForm postTo={postTo} />
-        </div>
-      }
       { (reachMaxDepth === false) &&
         <div className="discuss-subs">
+          <PostForm postTo={postTo} />
           <PostList listOf={listOf} level={level + 1} />
         </div>
       }
 
+      { (reachMaxDepth === true) &&
+        <div className="discuss-subs">
+          <div className="mt-3 ">
+            <a href={Funcs.util.href_add_base(`/post/${postOid}`)} target="_blank" rel="noreferrer">{continue_text}</a>
+          </div>
+        </div>
+      }
     </div>
   );
 }

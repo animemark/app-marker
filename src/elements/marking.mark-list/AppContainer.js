@@ -19,7 +19,7 @@ function Rooter() {
 
   useEffect(() => {
     const params = window.get_url_params();
-    const sortBy = params.sortBy || window.localStorage.getItem(Confs.localStorageKeys.marking_sortBy);
+    const sortBy = params.sortBy || window.localStorage.getItem(Confs.localStorageKeys.marking_sortBy) || Confs.marking.sortByDefault;
     if (sortBy) {
       dispatch(Redux.actions.marking.set_sortBy(sortBy));
     }

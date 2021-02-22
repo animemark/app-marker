@@ -118,6 +118,10 @@ export default createSlice({
       const { postTo, errorNo } = action.payload;
       state.formKvs[postTo].errorNo = errorNo;
     },
+    toggle_form_showing(state, action) {
+      const { postTo } = action.payload;
+      state.formKvs[postTo].showing = !state.formKvs[postTo].showing;
+    },
   },
   extraReducers: {
     // loadList

@@ -7,7 +7,6 @@ function EditArea(props) {
   const { domId, innerText, onChange, css = '' } = props;
 
   useEffect(() => {
-    console.log('EditArea useEffect:', domId);
     document.getElementById(domId).innerText = innerText;
   }, []);
 
