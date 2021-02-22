@@ -4,7 +4,8 @@ import Redux from "../../redux";
 import Confs from "../../confs";
 import Funcs from "../../funcs";
 
-
+const _confs = window._ssconfs;
+const _pks = _confs.common.pageKeys;
 
 function RelaInfo(props) {
 
@@ -68,16 +69,29 @@ function RelaInfo(props) {
     if (!pageKey) continue;
     const relaDoc = relaKvs[pageKey];
     switch (keyType) {
-      case 'btsu':
+
+      case _pks.btoto_subject:
         DomLis.push(
           <a key={pageKey} className={itemCss} href={relaDoc._https_btoto} target="_blank" rel="noreferrer">{relaDoc.info.title}</a>
         );
         break;
-      case 'btep':
+      case _pks.btoto_episode:
         DomLis.push(
           <a key={pageKey} className={itemCss} href={relaDoc._https_btoto} target="_blank" rel="noreferrer">{relaDoc._short}</a>
         );
         break;
+
+      case _pks.mpark_subject:
+        DomLis.push(
+          <a key={pageKey} className={itemCss} href={relaDoc._https_mpark} target="_blank" rel="noreferrer">{relaDoc.info.name}</a>
+        );
+        break;
+      case _pks.mpark_episode:
+        DomLis.push(
+          <a key={pageKey} className={itemCss} href={relaDoc._https_mpark} target="_blank" rel="noreferrer">{relaDoc._short}</a>
+        );
+        break;
+
       default:
         break;
     }
