@@ -111,11 +111,14 @@ function PostForm(props) {
   }
 
   if (!userIid) {
-    return (
-      <div className="discuss-form">
-        <div className="info">You need to log in to comment.</div>
-      </div>
-    );
+    if (isRoot) {
+      return (
+        <div className="discuss-form">
+          <div className="info">You need to log in to comment.</div>
+        </div>
+      );
+    }
+    return null;
   }
 
   // if (userIid !== 1) {
