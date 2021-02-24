@@ -44,6 +44,7 @@ const confs = {
         showing: false,
         posting: false,
         message: '',
+        files: {},
       }
     },
   },
