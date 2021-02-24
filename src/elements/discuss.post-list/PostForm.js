@@ -63,6 +63,7 @@ function PostForm(props) {
       message,
     };
     dispatch(Redux.thunks.discuss.createPost(data));
+    set_formFiles({});
     window.resizeFrameHeight();
   };
 
