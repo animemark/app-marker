@@ -11,6 +11,10 @@ function reset_root_list(state) {
     [state.params.postTo]: Confs.discuss.default_formKvs_unit(),
   };
 }
+
+const form_error_inc = {
+  val: 0
+};
 export default createSlice({
   name: 'discuss',
   initialState: {
@@ -102,6 +106,18 @@ export default createSlice({
       const postTo = action.payload;
       state.formKvs[postTo] = Confs.discuss.default_formKvs_unit();
     },
+    push_form_error(state, action) {
+      const { postTo, error } = action.payload;
+      state.formKvs[postTo].errors.push({ text: error, time: (new Date()).getTime(), ekey: ++form_error_inc.val });
+    },
+    shift_form_error(state, action) {
+      const { postTo } = action.payload;
+      state.formKvs[postTo].errors.shift();
+    },
+    clean_form_error(state, action) {
+      const { postTo } = action.payload;
+      state.formKvs[postTo].errors = [];
+    },
     set_form_showing(state, action) {
       const { postTo, showing } = action.payload;
       state.formKvs[postTo].showing = showing;
@@ -113,10 +129,6 @@ export default createSlice({
     set_form_message(state, action) {
       const { postTo, message } = action.payload;
       state.formKvs[postTo].message = message;
-    },
-    set_form_errorNo(state, action) {
-      const { postTo, errorNo } = action.payload;
-      state.formKvs[postTo].errorNo = errorNo;
     },
     toggle_form_showing(state, action) {
       const { postTo } = action.payload;
@@ -197,7 +209,17 @@ export default createSlice({
       const { error, eno, res } = action.payload;
 
       if (error || eno) {
-        state.formKvs[postTo].errorNo = eno || Confs.eno.unknownError;
+        switch (eno) {
+          case 1001:
+            state.formKvs[postTo].errors.push({ text: `Comments can't be blank.`, time: (new Date()).getTime(), ekey: ++form_error_inc.val });
+            break;
+          case Confs.eno.LoginRequired:
+            state.formKvs[postTo].errors.push({ text: `It looks like you have not logged in yet?`, time: (new Date()).getTime(), ekey: ++form_error_inc.val });
+            break;
+          default:
+            state.formKvs[postTo].errors.push({ text: 'Unknown error, please try again.', time: (new Date()).getTime(), ekey: ++form_error_inc.val });
+            break;
+        }
         state.formKvs[postTo].posting = false;
         return;
       }
@@ -249,7 +271,7 @@ export default createSlice({
     },
     [DiscussThunks.createPost.rejected]: (state, action) => {
       const { postTo } = action.meta.arg;
-      state.formKvs[postTo].errorNo = Confs.eno.unknownError;
+      state.formKvs[postTo].errors.push({ text: 'Unknown error, please try again.', time: (new Date()).getTime(), ekey: ++form_error_inc.val });
       state.formKvs[postTo].posting = false;
     },
   },

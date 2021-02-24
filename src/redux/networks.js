@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const api_end_point = `https://app-marker.${document.domain}`;
 
 /**
@@ -6,22 +8,18 @@ const api_end_point = `https://app-marker.${document.domain}`;
  * @param {*} data data to post
  * @param {*} opts 
  */
-export async function app_marker_api(path, data = null, {
-  method = 'POST',
-  mode = 'cors',
-  credentials = 'include',
-  headers = {
-    "Content-Type": "application/json",
-  },
-} = {}) {
+export async function app_marker_api(path, data = null, opts = {}) {
   const url = `${api_end_point}${path}`;
-  return fetch(url, {
-    method,
-    mode,
-    credentials,
-    headers,
-    body: data ? JSON.stringify(data) : null,
-  });
+  const config = Object.assign({
+    url,
+    data,
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  }, opts);
+  return axios(config);
 }
 
 // ================

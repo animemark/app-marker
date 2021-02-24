@@ -54,7 +54,7 @@ function MarkItem(props) {
     <div className="d-flex marking-item">
 
       <a href={relaInfo.https} target="_blank" rel="noreferrer">
-        <img src={Funcs.util.cover_width(relaInfo.cover)} alt="" width="60" height="80" />
+        <img src={Funcs.util.cover_width(relaInfo.cover, 300)} alt="" width="60" height="80" />
       </a>
       <div className="ps-3 overflow-hidden">
         <a className="fw-bold" href={relaInfo.https} target="_blank" rel="noreferrer">

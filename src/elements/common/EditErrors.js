@@ -4,29 +4,19 @@ import Redux from "../../redux";
 import Confs from "../../confs";
 
 function EditErrors(props) {
-  const { errorNo } = props;
+  const { errors } = props;
 
-  if (!errorNo) return null;
-  switch (errorNo) {
-    case 1001:
-      return (
-        <div className="alert alert-danger error">
-          Comments can't be blank.
-        </div>
-      );
-    case Confs.eno.LoginRequired:
-      return (
-        <div className="alert alert-danger error">
-          It looks like you have not logged in yet?
-        </div>
-      );
-    default:
-      return (
-        <div className="alert alert-danger error">
-          Unknown error, please try again.
-        </div>
-      );
-  }
+  const ItemDoms = errors.map(error => (
+    <div key={error.ekey} className="errorItem">{error.text}</div>
+  ));
+
+  if (!ItemDoms?.length) return null;
+
+  return (
+    <div className="errorList">
+      {ItemDoms}
+    </div>
+  );
 }
 
 export default EditErrors;

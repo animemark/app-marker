@@ -40,6 +40,7 @@ const confs = {
     default_formKvs_unit() {
       return {
         errorNo: 0,
+        errors: [],
         showing: false,
         posting: false,
         message: '',

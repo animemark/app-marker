@@ -4,6 +4,8 @@ import Redux from "../../redux";
 import Confs from "../../confs";
 import Funcs from "../../funcs";
 
+const _confs = window._ssconfs;
+
 function _Example() {
 
   const dispatch = useDispatch();
