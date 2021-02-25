@@ -29,7 +29,7 @@ function PostItem(props) {
   const mkerDoc = userKvs?.[mkerIid];
 
   useEffect(() => {
-    window.resizeFrameHeight();
+    window.handleLimitHeight(postOid);
   });
 
   const toggle_showFormStatus = () => {
@@ -37,6 +37,14 @@ function PostItem(props) {
       postTo
     }));
     return;
+  };
+
+  const onClick_seeMore = () => {
+    const o_ctrl = document.getElementById('limit-height-ctrl-' + postOid);
+    if (!o_ctrl) return;
+    o_ctrl.classList.remove('contracted');
+    o_ctrl.classList.add('expanded');
+    window.resizeFrameHeight();
   };
 
   const ReplyBtnDom = () => {
@@ -80,7 +88,14 @@ function PostItem(props) {
       <RelaInfo pageKeys={postDoc.pageKeys} />
 
       <div className="mt-2">
-        <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
+        <div id={`limit-height-ctrl-${postOid}`} className="limit-height-ctrl max-300px">
+          <div id={`limit-height-body-${postOid}`} className="limit-height-body">
+            <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
+          </div>
+          <div id={`limit-height-more-${postOid}`} className="limit-height-more" onClick={onClick_seeMore}>
+            See More
+          </div>
+        </div>
       </div>
 
       <div className="mt-2 d-flex align-items-center small text-muted">

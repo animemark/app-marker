@@ -191,7 +191,7 @@ function uploader_upload($event, callback) {
     callback({
       finc,
       what: 'failure',
-      data: 'Please verify that your image is under 5MB.'
+      data: 'invalid_file_size'
     });
     return;
   }
@@ -203,7 +203,7 @@ function uploader_upload($event, callback) {
     callback({
       finc,
       what: 'failure',
-      data: 'Accept .jpeg .jpg .gif .png .webp file only'
+      data: 'invalid_file_type'
     });
     return;
   }
@@ -227,21 +227,22 @@ function uploader_upload($event, callback) {
   })
     .then(resp => resp.data)
     .then((json) => {
-      if (json.eno) {
+      const { err, res } = json;
+      if (err) {
         callback({
           finc,
           what: 'failure',
-          data: 'Unknown error, please try again.',
+          data: err,
         });
         return;
       }
-      callback({ finc, what: 'success', data: json.res.name });
+      callback({ finc, what: 'success', data: res.name });
     })
     .catch((error) => {
       callback({
         finc,
         what: 'failure',
-        data: 'Unknown error, please try again.',
+        data: 'unknown',
       });
     });
 

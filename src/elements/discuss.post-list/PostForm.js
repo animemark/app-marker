@@ -4,11 +4,22 @@ import Redux from "../../redux";
 import Confs from "../../confs";
 
 import EditArea from "../common/EditArea";
-import EditErrors from "../common/EditErrors";
+import EditError from "../common/EditError";
 import EditFiles from "../common/EditFiles";
 import EditToolBar from "../common/EditToolBar";
 
 const login_url = `https://id.${document.domain}/login`;
+
+const errors = {
+  login: 'It looks like you have not logged in yet?',
+  message_empty: "Comments can't be blank.",
+  invalid_file_size: 'Please verify that your image is under 5MB.',
+  invalid_file_type: 'Accept .jpeg .jpg .gif .png .webp file only.',
+  no_file_uploaded: 'No files were uploaded.',
+  invalid_file_data: 'An error occurred while recognizing the file.',
+  write_file_failed: 'An error occurred while writing the file.',
+  unknown: 'Unknown error, please try again.',
+};
 
 function PostForm(props) {
   const { postTo, listOf, isRoot = false } = props;
@@ -19,30 +30,14 @@ function PostForm(props) {
   const { userIid } = useSelector((state) => state.users);
   const formVal = useSelector((state) => state.discuss.formKvs[postTo]);
 
-  const { posting, message, errors, showing } = formVal || {};
+  const { posting, message, showing, error, files } = formVal || {};
   const has_msg = message?.length ? true : false;
   const isShowForm = isRoot || showing ? true : false;
-
-  const [formFiles, set_formFiles] = useState({});
 
   useEffect(() => {
     if (!formVal) {
       dispatch(Redux.actions.discuss.init_form(postTo));
     }
-  });
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!errors?.length) {
-        return;
-      }
-      const error = Array.from(errors).shift();
-      const time_new = (new Date()).getTime();
-      if (time_new - error.time >= 3000) {
-        dispatch(Redux.actions.discuss.shift_form_error({ postTo }));
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
   });
 
   if (!formVal) {
@@ -52,9 +47,9 @@ function PostForm(props) {
   const onClick_submit = function () {
     console.log('onClick_submit');
     if (!has_msg) {
-      dispatch(Redux.actions.discuss.push_form_error({
+      dispatch(Redux.actions.discuss.set_form_error({
         postTo,
-        error: `Comments can't be blank.`,
+        error: 'message_empty',
       }));
       return;
     }
@@ -63,37 +58,36 @@ function PostForm(props) {
       message,
     };
     dispatch(Redux.thunks.discuss.createPost(data));
-    set_formFiles({});
     window.resizeFrameHeight();
   };
 
   const onChange_EditArea = function (text) {
     dispatch(Redux.actions.discuss.set_form_message({ postTo, message: text }));
-    dispatch(Redux.actions.discuss.clean_form_error({ postTo }));
+    dispatch(Redux.actions.discuss.set_form_error({ postTo, error: null }));
     window.resizeFrameHeight();
   };
 
   const onUploadEvent = function (pack) {
     const { finc, what, data } = pack;
-    set_formFiles(Object.assign({}, formFiles, {
-      [finc]: pack
+    dispatch(Redux.actions.discuss.assign_form_files({
+      postTo,
+      files: {
+        [finc]: pack
+      },
     }));
 
     switch (what) {
       case 'failure':
-        dispatch(Redux.actions.discuss.push_form_error({
-          postTo,
-          error: data,
-        }));
+        dispatch(Redux.actions.discuss.set_form_error({ postTo, error: data }));
         break;
       case 'success':
         const o_box = document.getElementById(editAreaDomId);
         let append = o_box.innerText ? '\n' : '';
         append += `<img src="attach:${data}"/>`;
-        o_box.innerText = o_box.innerText + append
+        o_box.innerText = o_box.innerText + append;
         o_box.focus();
         dispatch(Redux.actions.discuss.set_form_message({ postTo, message: o_box.innerText }));
-        dispatch(Redux.actions.discuss.clean_form_error({ postTo }));
+        dispatch(Redux.actions.discuss.set_form_error({ postTo, error: null }));
         break;
       default:
         break;
@@ -150,12 +144,13 @@ function PostForm(props) {
   //   );
   // }
 
+  const erstr = error ? (errors[error] || errors.unknown) : null;
   return (
     <div className={`${isRoot ? '' : 'mt-3'} discuss-form ${isShowForm ? '' : 'd-none'}`}>
       <div className="editor">
         <EditArea domId={editAreaDomId} innerText={message} onChange={onChange_EditArea} />
-        <EditErrors errors={errors} />
-        <EditFiles files={formFiles} />
+        <EditError erstr={erstr} />
+        <EditFiles files={files} />
         <EditToolBar editAreaDomId={editAreaDomId} SubmitButton={SubmitButton} enableImgBtn={true} onUploadEvent={onUploadEvent} />
       </div>
     </div>

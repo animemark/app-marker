@@ -35,7 +35,7 @@ function EditFiles(props) {
       case 'failure':
         FilesDom.push((
           <div key={finc} className="file-holder failure">
-            <i class="fas fa-exclamation-circle text-danger"></i>
+            <i className="fas fa-exclamation-circle text-danger"></i>
           </div>
         ));
         break;
@@ -49,7 +49,6 @@ function EditFiles(props) {
         ));
         break;
     }
-
   }
 
   return (

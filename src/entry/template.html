@@ -33,6 +33,22 @@
 <body id="body">
   <div id="root" class="wrapper"></div>
   <script>
+    function get_url_params() {
+      try {
+        const pars = {};
+        const o_url = new URL(window.location.href);
+        const o_par = o_url.searchParams;
+        const keys = o_par.keys();
+        for (const key of keys) {
+          const val = o_par.get(key);
+          pars[key] = val;
+        }
+        return pars;
+      } catch (error) {
+        console.log(error);
+      }
+      return {};
+    }
     function resizeFrameHeight() {
       if (!window.parent || !window.parent.set_marker_app_iframe_height) {
         //console.log("no window.parent.set_marker_app_iframe_height ???");
@@ -47,6 +63,43 @@
       const o_url = new URL(window.location.href);
       const fid = 'app-marker' + String(o_url.pathname).toLowerCase();
       window.parent.set_marker_app_iframe_height(fid, val);
+    }
+    function handleLimitHeight(id) {
+      console.log('handleLimitHeight:', id);
+      const o_ctrl = document.getElementById('limit-height-ctrl-' + id);
+      const o_body = document.getElementById('limit-height-body-' + id);
+      const o_more = document.getElementById('limit-height-more-' + id);
+      if (!o_ctrl) return;
+      if (o_ctrl.classList.contains('expanded')) {
+        console.log('expanded');
+        return;
+      }
+      if (o_ctrl.classList.contains('contracted')) {
+        console.log('contracted');
+        return;
+      }
+      if (o_body.scrollHeight > o_body.offsetHeight || o_body.scrollHeight > o_body.clientHeight) {
+        if (o_ctrl.classList.contains('contracted') === false) {
+          o_ctrl.classList.add('contracted');
+        }
+      }
+      resizeFrameHeight();
+    }
+    function callback_limit_html_img_onload(obj) {
+      const o_ctrl = obj.closest('div.limit-height-ctrl');
+      if (o_ctrl) {
+        const oid = String(o_ctrl.id).split('-').pop();
+        handleLimitHeight(oid);
+      }
+      resizeFrameHeight();
+    }
+    function callback_limit_html_img_onerror(obj) {
+      const o_ctrl = obj.closest('div.limit-height-ctrl');
+      if (o_ctrl) {
+        const oid = String(o_ctrl.id).split('-').pop();
+        handleLimitHeight(oid);
+      }
+      resizeFrameHeight();
     }
     function getSelectionParentElement() {
       let o_par = null;
@@ -67,28 +120,7 @@
       selection.removeAllRanges();
       selection.addRange(range);
     }
-    function callback_limit_html_img_onload(obj) {
-      resizeFrameHeight();
-    }
-    function callback_limit_html_img_onerror(obj) {
-      resizeFrameHeight();
-    }
-    function get_url_params() {
-      try {
-        const pars = {};
-        const o_url = new URL(window.location.href);
-        const o_par = o_url.searchParams;
-        const keys = o_par.keys();
-        for (const key of keys) {
-          const val = o_par.get(key);
-          pars[key] = val;
-        }
-        return pars;
-      } catch (error) {
-        console.log(error);
-      }
-      return {};
-    }
+
   </script>
   <script>
     // themes, we may have more themes in the future

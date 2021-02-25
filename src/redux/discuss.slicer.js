@@ -3,18 +3,6 @@ import DiscussThunks from './discuss.thunks';
 import Funcs from '../funcs';
 import Confs from '../confs';
 
-function reset_root_list(state) {
-  state.postLis = {
-    [state.params.listOf]: Confs.discuss.default_postLis_unit(),
-  };
-  state.formKvs = {
-    [state.params.postTo]: Confs.discuss.default_formKvs_unit(),
-  };
-}
-
-const form_error_inc = {
-  val: 0
-};
 export default createSlice({
   name: 'discuss',
   initialState: {
@@ -45,8 +33,6 @@ export default createSlice({
       state.postLis = {
         [state.params.listOf]: Confs.discuss.default_postLis_unit(),
       };
-      //reset_root_list(state);
-      //window.localStorage.setItem(Confs.localStorageKeys.discuss_sortBy, sortBy);
     },
 
     // post item
@@ -106,17 +92,10 @@ export default createSlice({
       const postTo = action.payload;
       state.formKvs[postTo] = Confs.discuss.default_formKvs_unit();
     },
-    push_form_error(state, action) {
+
+    set_form_error(state, action) {
       const { postTo, error } = action.payload;
-      state.formKvs[postTo].errors.push({ text: error, time: (new Date()).getTime(), ekey: ++form_error_inc.val });
-    },
-    shift_form_error(state, action) {
-      const { postTo } = action.payload;
-      state.formKvs[postTo].errors.shift();
-    },
-    clean_form_error(state, action) {
-      const { postTo } = action.payload;
-      state.formKvs[postTo].errors = [];
+      state.formKvs[postTo].error = error;
     },
     set_form_showing(state, action) {
       const { postTo, showing } = action.payload;
@@ -134,6 +113,10 @@ export default createSlice({
       const { postTo } = action.payload;
       state.formKvs[postTo].showing = !state.formKvs[postTo].showing;
     },
+    assign_form_files(state, action) {
+      const { postTo, files } = action.payload;
+      Object.assign(state.formKvs[postTo].files, files);
+    },
   },
   extraReducers: {
     // loadList
@@ -142,7 +125,6 @@ export default createSlice({
       if (sortBy !== state.sortBy) {
         return;
       }
-
       if (typeof state.postLis[listOf] === 'undefined') {
         state.postLis[listOf] = Confs.discuss.default_postLis_unit();
       }
@@ -194,7 +176,6 @@ export default createSlice({
       if (sortBy !== state.sortBy) {
         return;
       }
-
       state.postLis[listOf].loadStatus = 'failure';
       Funcs.util.next_state_status(state, 'failure');
     },
@@ -206,20 +187,10 @@ export default createSlice({
     },
     [DiscussThunks.createPost.fulfilled]: (state, action) => {
       const { postTo } = action.meta.arg;
-      const { error, eno, res } = action.payload;
+      const { err, res } = action.payload;
 
-      if (error || eno) {
-        switch (eno) {
-          case 1001:
-            state.formKvs[postTo].errors.push({ text: `Comments can't be blank.`, time: (new Date()).getTime(), ekey: ++form_error_inc.val });
-            break;
-          case Confs.eno.LoginRequired:
-            state.formKvs[postTo].errors.push({ text: `It looks like you have not logged in yet?`, time: (new Date()).getTime(), ekey: ++form_error_inc.val });
-            break;
-          default:
-            state.formKvs[postTo].errors.push({ text: 'Unknown error, please try again.', time: (new Date()).getTime(), ekey: ++form_error_inc.val });
-            break;
-        }
+      if (err) {
+        state.formKvs[postTo].error = err;
         state.formKvs[postTo].posting = false;
         return;
       }
@@ -271,7 +242,7 @@ export default createSlice({
     },
     [DiscussThunks.createPost.rejected]: (state, action) => {
       const { postTo } = action.meta.arg;
-      state.formKvs[postTo].errors.push({ text: 'Unknown error, please try again.', time: (new Date()).getTime(), ekey: ++form_error_inc.val });
+      state.formKvs[postTo].error = 'unknown';
       state.formKvs[postTo].posting = false;
     },
   },
