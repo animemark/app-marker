@@ -57,7 +57,7 @@ function LoadMore(props) {
           );
         } else {
           BtnDom = (
-            <button type="button" className="btn btn-sm btn-light disabled">Be the first to comment.</button>
+            <button type="button" className="btn btn-sm btn-light disabled">Be the first to start a topic.</button>
           );
         }
         break;

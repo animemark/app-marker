@@ -64,7 +64,7 @@ function MarkList(props) {
           );
         } else {
           BtnDom = (
-            <button type="button" className="btn btn-sm btn-light disabled">Be the first to make mark.</button>
+            <button type="button" className="btn btn-sm btn-light disabled">Be the first to make a mark.</button>
           );
         }
         break;
