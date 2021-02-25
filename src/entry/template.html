@@ -65,7 +65,6 @@
       window.parent.set_marker_app_iframe_height(fid, val);
     }
     function handleLimitHeight(id) {
-      console.log('handleLimitHeight:', id);
       const o_ctrl = document.getElementById('limit-height-ctrl-' + id);
       const o_body = document.getElementById('limit-height-body-' + id);
       const o_more = document.getElementById('limit-height-more-' + id);
@@ -94,12 +93,7 @@
       resizeFrameHeight();
     }
     function callback_limit_html_img_onerror(obj) {
-      const o_ctrl = obj.closest('div.limit-height-ctrl');
-      if (o_ctrl) {
-        const oid = String(o_ctrl.id).split('-').pop();
-        handleLimitHeight(oid);
-      }
-      resizeFrameHeight();
+      callback_limit_html_img_onload(obj);
     }
     function getSelectionParentElement() {
       let o_par = null;
