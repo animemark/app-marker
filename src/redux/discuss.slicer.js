@@ -6,7 +6,6 @@ import Confs from '../confs';
 export default createSlice({
   name: 'discuss',
   initialState: {
-
     params: false,
     status: 'initial',
 

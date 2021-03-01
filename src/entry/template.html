@@ -68,16 +68,19 @@
       const o_ctrl = document.getElementById('limit-height-ctrl-' + id);
       const o_body = document.getElementById('limit-height-body-' + id);
       const o_more = document.getElementById('limit-height-more-' + id);
+      const o_left = document.getElementById('limit-height-left-' + id);
       if (!o_ctrl) return;
       if (o_ctrl.classList.contains('expanded')) {
         console.log('expanded');
         return;
       }
-      if (o_ctrl.classList.contains('contracted')) {
-        console.log('contracted');
-        return;
-      }
-      if (o_body.scrollHeight > o_body.offsetHeight || o_body.scrollHeight > o_body.clientHeight) {
+      const hs = o_body.scrollHeight;
+      const hc = o_body.clientHeight;
+      const ho = o_body.offsetHeight;
+      const hl = hs - hc;
+      const hp = Math.max(1, Math.min(99, (Number(hl / hs * 100).toFixed(0))));
+      o_left.innerText = ` ${hp}%`;//' ' + (hp) + '%';
+      if (hs > ho || hs > hc) {
         if (o_ctrl.classList.contains('contracted') === false) {
           o_ctrl.classList.add('contracted');
         }
@@ -144,9 +147,6 @@
         o_node.append(o_link);
       }
     })();
-  </script>
-  <script>
-    //document.writeln(`\<script src="https://app-marker.${document.domain}/api/common/ssconfs.js" crossOrigin="anonymous"\>\<\/script\>`);
   </script>
   <script src="https://app-marker.bato.to/api/common/ssconfs.js" crossOrigin="anonymous"></script>
 </body>

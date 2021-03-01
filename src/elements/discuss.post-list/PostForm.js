@@ -22,7 +22,7 @@ const errors = {
 };
 
 function PostForm(props) {
-  const { postTo, listOf, isRoot = false } = props;
+  const { postTo, isRoot = false } = props;
 
   const editAreaDomId = `EditArea_${postTo}`;
 

@@ -58,14 +58,6 @@ function MarkForm(props) {
     window.resizeFrameHeight();
   };
 
-  // const onChange_TextArea = function (event) {
-  //   dispatch(Redux.actions.marking.set_form_comment(event.target.value));
-  //   if (errorNo) {
-  //     dispatch(Redux.actions.marking.set_form_errorNo(0));
-  //   }
-  //   window.resizeFrameHeight();
-  // };
-
   const onChange_martus = (evt) => {
     dispatch(Redux.actions.marking.set_form_martus(evt.target.value));
   };
@@ -73,7 +65,6 @@ function MarkForm(props) {
   const onChange_score = (evt) => {
     dispatch(Redux.actions.marking.set_form_score(Number(evt.target.value)));
   };
-
 
   const SubmitButton = () => {
     if (posting) {

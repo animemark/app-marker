@@ -66,8 +66,13 @@ function NodeInfo() {
           <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
         </div>
 
-        <div className="mt-2 d-flex align-items-center small text-muted">
+        <div className="mt-2 d-flex justify-content-between align-items-center small text-muted">
           <LikeAndHate postOid={postOid} />
+          <div className="btn-group btn-group-sm">
+            <button className="btn btn-sm btn-light">Edit</button>
+            <button className="btn btn-sm btn-light">Delete</button>
+            <button className="btn btn-sm btn-light">Pin</button>
+          </div>
         </div>
       </div>
     </div>

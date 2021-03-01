@@ -93,7 +93,7 @@ function PostItem(props) {
             <div className="limit-html" dangerouslySetInnerHTML={{ __html: Funcs.common.format_limit_html(postDoc._message_in_html) }}></div>
           </div>
           <div id={`limit-height-more-${postOid}`} className="limit-height-more" onClick={onClick_seeMore}>
-            See More
+            show the remaining<span id={`limit-height-left-${postOid}`}></span>
           </div>
         </div>
       </div>
@@ -101,6 +101,7 @@ function PostItem(props) {
       <div className="mt-2 d-flex align-items-center small text-muted">
         <LikeAndHate postOid={postOid} />
         <ReplyBtnDom />
+        <a className="ms-3" href={Funcs.util.href_add_base(`/post/${postOid}`)} target="_blank" rel="noreferrer">Link</a>
       </div>
 
       { (reachMaxDepth === false) &&
