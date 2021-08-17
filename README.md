@@ -1,6 +1,6 @@
 
 
-The marking/discuss system for bato.to/mangapark/animemark sites
+The marking/discuss system for bato.to sites
 
 Base on [create-react-app](https://github.com/facebook/create-react-app)
 
